@@ -6,22 +6,25 @@ var c = require('../Caret');
 var Mousetrap = require('mousetrap');
 
 var Sample = React.createClass({
+  getInitialState: function () {
+    return { paused: true };
+  },
   play: function () {
     this.refs.dom.getDOMNode().play();
+    this.setState({ paused: false });
   },
   pause: function () {
     this.refs.dom.getDOMNode().pause();
+    this.setState({ paused: true });
   },
   render: function () {
-    return (<video src={this.props.sample.url} ref="dom" />);
+    return (<video src={this.props.sample.url} ref="dom" className={(this.state.paused)? 'paused': ''} />);
   }
 });
 
 var SampleList = React.createClass({
   getInitialState: function () {
-    return {
-      paused: true
-    };
+    return { paused: true };
   },
   componentDidMount: function () {
     var self = this;
@@ -41,9 +44,7 @@ var SampleList = React.createClass({
   },
   toggle: function () {
     (this.state.paused) ? this.play() : this.pause();
-    this.setState({
-      paused: !this.state.paused
-    });
+    this.setState({ paused: !this.state.paused });
   },
   render: function() {
     var renderSample = function(sample, i) {
