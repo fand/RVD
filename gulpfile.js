@@ -43,6 +43,7 @@ gulp.task('scripts', function () {
             insertGlobals: true,
             transform: ['reactify']
         }))
+        .pipe($.plumber())
         .pipe(gulp.dest('dist/scripts'))
         .pipe($.size())
         .pipe($.connect.reload());
@@ -133,10 +134,10 @@ gulp.task('watch', ['html', 'bundle', 'connect'], function () {
     // Watch .html files
     gulp.watch('app/*.html', ['html']);
 
-    
+
     // Watch .scss files
     gulp.watch('app/styles/**/*.scss', ['styles']);
-    
+
 
 
     // Watch .jade files
