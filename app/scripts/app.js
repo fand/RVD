@@ -6,7 +6,8 @@ var React = window.React = require('react'),
 
 var c = require('./Caret.js');
 
-var Sample = function (file) {
+
+var SampleModel = function (file) {
   this.file = file;
   this.type = file.type;
   this.name = file.name;
@@ -28,7 +29,7 @@ var Dropper = React.createClass({
     var newSamples = [];
     for (var i = 0; i < files.length; i++) {
       var file = files[i];
-      var sample = new Sample(file);
+      var sample = new SampleModel(file);
       newSamples.push(sample);
     }
     return newSamples;
@@ -70,10 +71,21 @@ var Dropper = React.createClass({
   }
 });
 
+var Sample = React.createClass({
+  render: function () {
+    console.log(this.props);
+    return (
+      <video className="sample">
+        <source src={this.props.sample.url} />
+      </video>
+    );
+  }
+});
+
 var SampleList = React.createClass({
   render: function() {
     var renderSample = function(sample) {
-      return c.li({}, sample.name + ' : ' + sample.type + ' :: ' + sample.url);
+      return (<Sample sample={sample} />);
     };
     return c.ul({className: 'sampleList'}, this.props.samples.map(renderSample));
   }
