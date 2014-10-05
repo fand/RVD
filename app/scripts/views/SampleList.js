@@ -3,7 +3,7 @@
 
 var React = require('react');
 var c = require('../Caret');
-var Mousetrap = require('mousetrap');
+var Keys = require('../Keys');
 
 var Sample = React.createClass({
   getInitialState: function () {
@@ -28,7 +28,7 @@ var SampleList = React.createClass({
   },
   componentDidMount: function () {
     var self = this;
-    Mousetrap.bind('space', function () {
+    Keys.addHandler('play', 'space', function () {
       this.toggle();
     }.bind(this));
   },
