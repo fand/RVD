@@ -17,14 +17,24 @@ var Sample = React.createClass({
     this.setState({ paused: true });
   },
   setTime: function (time) {
-    this.refs.dom.getDOMNode().currentTime = time;
-    //this.props.sample.takeapicture();  // TODO: get thumbnail of video for config
+    var dom = this.refs.dom.getDOMNode();
+    if (dom.duration) {
+      this.refs.dom.getDOMNode().currentTime = time;
+      this.props.sample.getThumb(this.refs.dom.getDOMNode());  // get thumbnail of video for config
+    }
   },
   componentDidMount: function () {
-    this.setTime(0);
+    var dom = this.refs.dom.getDOMNode();
+    if (! dom.duration) {
+      var onload = function () {
+        this.setTime(0);
+        dom.removeEventListener('loadeddata', onload);
+      }.bind(this);
+      dom.addEventListener('loadeddata', onload);
+    }
   },
   render: function () {
-    return (<video src={this.props.sample.url} ref="dom" className={(this.state.paused)? 'paused': ''} />);
+    return (<video preload src={this.props.sample.url} ref="dom" className={(this.state.paused)? 'paused': ''} />);
   }
 });
 
