@@ -12,10 +12,10 @@ var Keys = function () {
   // push TAB to toggle play / config mode.
   Mousetrap.bind('tab', function () {
     this.toggleMode();
-  });
+  }.bind(this));
 };
 Keys.prototype.toggleMode = function () {
-  (this.mode === 'play') ? this.setConfigMode() : this.setPlayMode();
+  this.setMode((this.mode === 'play') ? 'config' : 'play');
 };
 Keys.prototype.setMode = function (mode) {
   for (var m in this.handlers) {
