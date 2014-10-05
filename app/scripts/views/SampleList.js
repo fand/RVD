@@ -3,7 +3,7 @@
 
 var React = require('react');
 var c = require('../Caret');
-var Keys = require('../Keys');
+var Mode = require('../Mode');
 var Sample = require('./Sample');
 
 var SampleList = React.createClass({
@@ -12,7 +12,7 @@ var SampleList = React.createClass({
   },
   componentDidMount: function () {
     var self = this;
-    Keys.addHandler('play', 'space', function () {
+    Mode.addKeybind('play', 'space', function () {
       this.toggle();
     }.bind(this));
   },

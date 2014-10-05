@@ -8,6 +8,10 @@ var SampleList = require('./SampleList');
 var ConfigList = require('./ConfigList');
 
 
+/**
+ * Manages samples.
+ *
+ */
 var RVDApp = React.createClass({
   getInitialState: function() {
     return {
