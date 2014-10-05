@@ -7,11 +7,18 @@ var c = require('../Caret');
 var Config =  React.createClass({
   getInitialState: function () {
     return {
+      time: 0,
+      rate: 1.0,
       pattern: '888a'
     };
   },
-  onPatternChange: function () {
-    console.log('pattern change!!');
+  onPatternChange: function (e) {
+    this.setState({
+      pattern: e.target.value
+    }, function () {
+      // console.log('pattern changed!!');
+      // console.log(this.state);
+    });
   },
   render: function () {
     return (
