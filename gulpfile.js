@@ -20,9 +20,6 @@ gulp.task('styles', function () {
         .pipe($.connect.reload());
 });
 
-
-
-
 // CoffeeScript
 gulp.task('coffee', function () {
     return gulp.src(
@@ -34,7 +31,6 @@ gulp.task('coffee', function () {
         )
         .pipe(gulp.dest('app/scripts'));
 });
-
 
 // Scripts
 gulp.task('scripts', function () {
@@ -48,17 +44,6 @@ gulp.task('scripts', function () {
         .pipe($.size())
         .pipe($.connect.reload());
     });
-
-
-
-gulp.task('jade', function () {
-    return gulp.src('app/template/*.jade')
-        .pipe($.jade({ pretty: true }))
-        .pipe(gulp.dest('dist'))
-        .pipe($.connect.reload());
-})
-
-
 
 // HTML
 gulp.task('html', function () {
@@ -124,30 +109,19 @@ gulp.task('json', function() {
         .pipe(gulp.dest('dist/scripts/'));
 });
 
-
 // Watch
 gulp.task('watch', ['html', 'bundle', 'connect'], function () {
-
     // Watch .json files
     gulp.watch('app/scripts/**/*.json', ['json']);
 
     // Watch .html files
     gulp.watch('app/*.html', ['html']);
 
-
     // Watch .scss files
     gulp.watch('app/styles/**/*.scss', ['styles']);
 
-
-
-    // Watch .jade files
-    gulp.watch('app/template/**/*.jade', ['jade', 'html']);
-
-
-
     // Watch .coffeescript files
     gulp.watch('app/scripts/**/*.coffee', ['coffee', 'scripts']);
-
 
     // Watch .js files
     gulp.watch('app/scripts/**/*.js', ['scripts']);

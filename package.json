@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "RVD",
   "version": "0.0.0",
   "dependencies": {},
   "devDependencies": {
@@ -12,7 +12,6 @@
     "gulp-coffee": "~1.4.1",
     "gulp-connect": "~1.0.0",
     "gulp-imagemin": "~0.1.4",
-    "gulp-jade": "~0.4.2",
     "gulp-jshint": "~1.4.0",
     "gulp-load-plugins": "~0.3.0",
     "gulp-plumber": "^0.6.6",
