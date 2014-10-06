@@ -10,7 +10,6 @@
     "gulp-cache": "~0.1.1",
     "gulp-clean": "^0.3.1",
     "gulp-coffee": "~1.4.1",
-    "gulp-connect": "~1.0.0",
     "gulp-imagemin": "~0.1.4",
     "gulp-jshint": "~1.4.0",
     "gulp-load-plugins": "~0.3.0",
@@ -20,6 +19,7 @@
     "gulp-size": "~0.1.2",
     "gulp-useref": "~0.4.4",
     "gulp-util": "~2.2.9",
+    "gulp-webserver": "^0.8.3",
     "mousetrap": "0.0.1",
     "react": "^0.10.0",
     "reactify": "~0.10.0"
