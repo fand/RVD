@@ -24,6 +24,7 @@
     "mousetrap": "0.0.1",
     "react": "^0.11.2",
     "reactify": "^0.14.0",
+    "require-directory": "^2.0.0",
     "vinyl-source-stream": "^1.0.0"
   },
   "engines": {
