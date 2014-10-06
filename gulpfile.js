@@ -4,6 +4,8 @@ var gulp = require('gulp');
 
 // Load plugins
 var $ = require('gulp-load-plugins')();
+var browserify = require('browserify');
+var source = require('vinyl-source-stream');
 
 // Styles
 gulp.task('styles', function () {
@@ -32,14 +34,22 @@ gulp.task('coffee', function () {
 
 // Scripts
 gulp.task('scripts', function () {
-  return gulp.src('app/scripts/app.js')
-    .pipe($.browserify({
-      insertGlobals: true,
-      transform: ['reactify']
-    }))
-    .pipe($.plumber())
-    .pipe(gulp.dest('dist/scripts'))
-    .pipe($.size());
+  var bundler = browserify({
+    entries: ['./app/scripts/app.js'],
+    extensions: ['.js'],
+    debug: true,
+    insertGlobals: true,
+    cache: {}, packageCache: {}, fullPaths: true
+  });
+
+  bundler.transform('reactify');
+
+  var rebundle = function () {
+    bundler.bundle()
+      .on('error', console.error('Compile.error'))
+      .pipe(source('app.js'))
+      .pipe(gulp.dest('dist/scripts'));
+  };
 });
 
 // HTML
