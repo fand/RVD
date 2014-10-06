@@ -20,36 +20,27 @@ gulp.task('styles', function () {
     .pipe($.size());
 });
 
-// CoffeeScript
-gulp.task('coffee', function () {
-  return gulp.src(
-    ['app/scripts/**/*.coffee', '!app/scripts/**/*.js'],
-    {base: 'app/scripts'}
-  )
-    .pipe(
-      $.coffee({ bare: true }).on('error', $.util.log)
-    )
-    .pipe(gulp.dest('app/scripts'));
-});
-
 // Scripts
 gulp.task('scripts', function () {
   var bundler = browserify({
     entries: ['./app/scripts/app.js'],
-    extensions: ['.js'],
+    extensions: ['.js', '.coffee'],
     debug: true,
     insertGlobals: true,
     cache: {}, packageCache: {}, fullPaths: true
   });
 
+  bundler.transform('coffeeify');
   bundler.transform('reactify');
 
   var rebundle = function () {
     bundler.bundle()
-      .on('error', console.error('Compile.error'))
+      .on('error', function(){console.error('Compile.error');})
       .pipe(source('app.js'))
       .pipe(gulp.dest('dist/scripts'));
   };
+
+  rebundle();
 });
 
 // HTML
@@ -129,11 +120,8 @@ gulp.task('watch', ['html', 'bundle', 'webserver'], function () {
   // Watch .scss files
   gulp.watch('app/styles/**/*.scss', ['styles']);
 
-  // Watch .coffeescript files
-  gulp.watch('app/scripts/**/*.coffee', ['coffee', 'scripts']);
-
-  // Watch .js files
-  gulp.watch('app/scripts/**/*.js', ['scripts']);
+  // Watch .js or .coffee files
+  gulp.watch(['app/scripts/**/*.js', 'app/scripts/**/*.coffee'], ['scripts']);
 
   // Watch image files
   gulp.watch('app/images/**/*', ['images']);
