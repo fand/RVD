@@ -1,7 +1,7 @@
 var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
+var del = require('del');
 
 // Clean
-gulp.task('clean', function () {
-  return gulp.src(['dist/styles', 'dist/scripts', 'dist/images'], {read: false}).pipe($.clean());
+gulp.task('clean', function (cb) {
+  del(['dist/styles', 'dist/scripts', 'dist/images'], cb);
 });
