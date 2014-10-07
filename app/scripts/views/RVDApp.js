@@ -2,20 +2,16 @@
 'use strict';
 
 var React = require('react');
-var c = require('../Caret');
-var Dropper = require('./Dropper');
-var SampleList = require('./SampleList');
-var ConfigList = require('./ConfigList');
+var SampleManager = require('./SampleManager');
 
 
-/**
- * Manages samples.
- *
+/** 
+ * Manages global mode & keybindings of RVDApp.
  */
 var RVDApp = React.createClass({
   getInitialState: function() {
     return {
-      samples: []
+      mode: 'play'
     };
   },
   addSamples: function (newSamples) {
@@ -28,9 +24,7 @@ var RVDApp = React.createClass({
     return (
       <div>
         <h1>RVD</h1>
-        <Dropper samples={this.state.samples} onDrop={this.addSamples} />
-        <SampleList samples={this.state.samples} />
-        <ConfigList samples={this.state.samples} />
+        <SampleManager />
       </div>
     );
   }
