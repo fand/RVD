@@ -2,29 +2,31 @@
 'use strict';
 
 var React = require('react');
-var SampleManager = require('./SampleManager');
+var SamplesManager = require('./SamplesManager');
+var SampleList = require('./SampleList');
+var ConfigList = require('./ConfigList');
 
 
-/** 
- * Manages global mode & keybindings of RVDApp.
+/**
+ * Holds models of mode, samples.
  */
 var RVDApp = React.createClass({
   getInitialState: function() {
     return {
-      mode: 'play'
+      mode: 'play',
+      samples: []
     };
   },
-  addSamples: function (newSamples) {
-    var samples = this.state.samples;
-    this.setState({
-      samples: samples.concat(newSamples)
-    });
+  onSamplesUpdate: function (newSamples) {
+    this.setState({ samples: newSamples });
   },
   render: function() {
     return (
       <div>
         <h1>RVD</h1>
-        <SampleManager />
+        <SamplesManager samples={this.state.samples} onUpdate={this.onSamplesUpdate} />
+        <SampleList samples={this.state.samples} />
+        <ConfigList samples={this.state.samples} />
       </div>
     );
   }

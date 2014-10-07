@@ -10,6 +10,10 @@ var cancelEvent = function (e) {
   e.stopPropagation();
 };
 
+
+/**
+ * Adds samples on Drop.
+ */
 var Dropper = React.createClass({
   getInitialState: function () {
     return {
