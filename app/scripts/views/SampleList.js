@@ -2,7 +2,6 @@
 'use strict';
 
 var React = require('react');
-var c = require('../Caret');
 var Mode = require('../Mode');
 var Sample = require('./Sample');
 
@@ -31,10 +30,10 @@ var SampleList = React.createClass({
     this.setState({ paused: !this.state.paused });
   },
   render: function() {
-    var renderSample = function(sample, i) {
+    var renderSample = function (sample, i) {
       return (<Sample sample={sample} ref={'sample' + i} />);
     };
-    return c.div({className: 'sampleList'}, this.props.samples.map(renderSample));
+    return (<div className="sampleList">{this.props.samples.map(renderSample)}</div>);
   }
 });
 

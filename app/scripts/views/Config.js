@@ -2,7 +2,6 @@
 'use strict';
 
 var React = require('react');
-var c = require('../Caret');
 
 var Config =  React.createClass({
   getInitialState: function () {

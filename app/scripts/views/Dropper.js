@@ -2,7 +2,6 @@
 'use strict';
 
 var React = require('react');
-var c = require('../Caret');
 var Sample = require('../models/Sample');
 
 var cancelEvent = function (e) {
@@ -56,13 +55,13 @@ var Dropper = React.createClass({
     if (this.state.over) {
       cls += ' over'
     }
-    return c.div({
-      className: cls,
-      onDragEnter: this.onDragEnter,
-      onDragLeave: this.onDragLeave,
-      onDragOver: this.onDragOver,
-      onDrop: this.onDrop
-    }, '');
+    return (
+      <div className={cls}
+        onDragEnter={this.onDragEnter}
+        onDragLeave={this.onDragLeave}
+        onDragOver={this.onDragOver}
+        onDrop={this.onDrop} />
+    );
   }
 });
 
