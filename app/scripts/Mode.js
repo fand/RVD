@@ -1,7 +1,7 @@
 'use strict';
 
 var Mousetrap = require('mousetrap');
-var RVDApp = require('./views/RVDApp');
+var RVDApp = require('./components/RVDApp');
 
 var Mode = function () {
   this.mode = 'play';
@@ -33,7 +33,7 @@ Mode.prototype.toggleMode = function () {
 Mode.prototype.setMode = function (mode) {
   // Set mode.
   this.mode = mode;
-  
+
   // Unbind all.
   for (var m in this.keybinds) {
     if (m === mode) { continue; }
@@ -41,7 +41,7 @@ Mode.prototype.setMode = function (mode) {
       Mousetrap.unbind(key);
     }
   }
-  
+
   // Bind for new mode.
   for (var key in this.keybinds[mode]) {
     Mousetrap.bind(key, this.keybinds[mode][key]);
@@ -74,6 +74,6 @@ var mode = new Mode();
 mode.addGlobalKeybinds('tab', function (e) {
   e.preventDefault();
   mode.toggleMode();
-});      
+});
 
 module.exports = mode;
