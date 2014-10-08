@@ -3,12 +3,12 @@
 
 var React = require('react');
 var Dropper = require('./Dropper');
+var SampleActions = require('../actions/SampleActions');
 
 
 var SamplesManager = React.createClass({
-  addSamples: function (addedSamples) {
-    var newSamples = this.props.samples.concat(addedSamples)
-    this.props.onUpdate(newSamples);
+  addSamples: function (files) {
+    SampleActions.createMultiple(files);
   },
   render: function() {
     return (

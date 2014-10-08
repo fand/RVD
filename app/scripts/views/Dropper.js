@@ -2,7 +2,6 @@
 'use strict';
 
 var React = require('react');
-var Sample = require('../models/Sample');
 
 var cancelEvent = function (e) {
   e.preventDefault();
@@ -11,22 +10,13 @@ var cancelEvent = function (e) {
 
 
 /**
- * Adds samples on Drop.
+ * Adds files on Drop.
  */
 var Dropper = React.createClass({
   getInitialState: function () {
     return {
       over: false
     }
-  },
-  load: function (files) {
-    var newSamples = [];
-    for (var i = 0; i < files.length; i++) {
-      var file = files[i];
-      var sample = new Sample(file);
-      newSamples.push(sample);
-    }
-    return newSamples;
   },
   onDragEnter: cancelEvent,
   onDragLeave: function (e) {
@@ -44,11 +34,11 @@ var Dropper = React.createClass({
   },
   onDrop: function (e) {
     cancelEvent(e);
-    var samples = this.load(e.dataTransfer.files);
+    var files = e.dataTransfer.files;
     this.setState({
       over: false
     });
-    this.props.onDrop(samples);
+    this.props.onDrop(files);
   },
   render: function() {
     var cls = 'dropper';

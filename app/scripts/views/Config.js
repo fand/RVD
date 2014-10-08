@@ -2,6 +2,7 @@
 'use strict';
 
 var React = require('react');
+var Dropper = require('./Dropper');
 
 var Config =  React.createClass({
   getInitialState: function () {
@@ -19,9 +20,16 @@ var Config =  React.createClass({
       // console.log(this.state);
     });
   },
+  onDrop: function (addedSamples) {
+    var newSample = addedSamples[0];
+    SampleDispatcher.setSample
+    var newSamples = this.props.sample
+    this.props.onUpdate(newSamples);
+  },
   render: function () {
     return (
       <div className="config">
+        <Dropper onDrop={this.onDrop} />
         <img src={this.props.sample.thumbUrl} />
         <span className="hexline">
           0x<input type="text" onChange={this.onPatternChange} value={this.state.pattern} />
