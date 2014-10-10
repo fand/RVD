@@ -13,9 +13,9 @@ var VideoList = React.createClass({
   },
   componentDidMount: function () {
     var self = this;
-    Mode.addKeybind('play', 'space', function () {
-      this.toggle();
-    }.bind(this));
+    // Mode.addKeybind('play', 'space', function () {
+    //   this.toggle();
+    // }.bind(this));
   },
   play: function () {
     this.props.samples.forEach(function (sample, i) {

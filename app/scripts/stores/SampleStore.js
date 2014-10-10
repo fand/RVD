@@ -26,6 +26,10 @@ var createMultiple = function (files) {
   files.forEach(create);
 };
 
+var playAll = function () {
+
+};
+
 
 var SampleStore = merge(EventEmitter.prototype, {
   getSamples: function () {

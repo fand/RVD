@@ -8,6 +8,7 @@ var ConfigList = require('./ConfigList');
 var SampleStore = require('../stores/SampleStore');
 var ModeStore = require('../stores/ModeStore');
 
+var Player = require('../mixins/Player');
 
 
 var getState = function () {
@@ -22,6 +23,7 @@ var getState = function () {
  * Holds models of mode, samples.
  */
 var RVDApp = React.createClass({
+  mixins: [Player],
   getInitialState: function() {
     return {
       mode: 'play',
