@@ -2,10 +2,12 @@
 'use strict';
 
 var React = require('react');
-var Mode = require('../Mode');
-var Sample = require('./Sample');
+var Video = require('./Video');
 
-var SampleList = React.createClass({
+var Mode = require('../Mode');
+
+
+var VideoList = React.createClass({
   getInitialState: function () {
     return { paused: true };
   },
@@ -30,12 +32,12 @@ var SampleList = React.createClass({
     this.setState({ paused: !this.state.paused });
   },
   render: function() {
-    var renderSample = function (sample, i) {
-      return (<Sample sample={sample} ref={'sample' + i} />);
+    var renderVideo = function (sample, i) {
+      return (<Video sample={sample} ref={'sample' + i} />);
     };
-    return (<div className="sampleList">{this.props.samples.map(renderSample)}</div>);
+    return (<div className="sampleList">{this.props.samples.map(renderVideo)}</div>);
   }
 });
 
 
-module.exports = SampleList;
+module.exports = VideoList;

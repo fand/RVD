@@ -3,7 +3,7 @@
 
 var React = require('react');
 
-var Sample = React.createClass({
+var Video = React.createClass({
   getInitialState: function () {
     return { paused: true };
   },
@@ -37,4 +37,4 @@ var Sample = React.createClass({
   }
 });
 
-module.exports = Sample;
+module.exports = Video;

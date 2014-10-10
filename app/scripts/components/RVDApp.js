@@ -3,10 +3,11 @@
 
 var React = require('react');
 var SamplesManager = require('./SamplesManager');
-var SampleList = require('./SampleList');
+var VideoList = require('./VideoList');
 var ConfigList = require('./ConfigList');
 var SampleStore = require('../stores/SampleStore');
 var ModeStore = require('../stores/ModeStore');
+
 
 
 var getState = function () {
@@ -46,7 +47,7 @@ var RVDApp = React.createClass({
       <div>
         <h1>RVD</h1>
         <SamplesManager samples={this.state.samples} />
-        <SampleList samples={this.state.samples} />
+        <VideoList samples={this.state.samples} />
         <ConfigList samples={this.state.samples} />
       </div>
     );
