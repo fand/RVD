@@ -8,5 +8,6 @@ module.exports = keyMirror({
 
   PLAYER_PLAY: null,
   PLAYER_STOP: null,
+  PLAYER_SYNC: null,
 
 });

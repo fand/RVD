@@ -9,7 +9,7 @@ var Video = React.createClass({
   getInitialState: function () {
     return { paused: true };
   },
-  play: function () {console.log('playyyyyyyyyyyyy');
+  play: function () {
     this.refs.dom.getDOMNode().play();
     this.setState({ paused: false });
   },
@@ -21,6 +21,9 @@ var Video = React.createClass({
     this.refs.dom.getDOMNode().pause();
     this.refs.dom.getDOMNode().currentTime = 0;
     this.setState({ paused: true });
+  },
+  sync: function (time) {
+    this.refs.dom.getDOMNode().currentTime = 0;
   },
   setTime: function (time) {
     var dom = this.refs.dom.getDOMNode();
@@ -39,7 +42,7 @@ var Video = React.createClass({
 
         PlayerStore.addListener(Constants.PLAYER_PLAY, self.play);
         PlayerStore.addListener(Constants.PLAYER_STOP, self.stop);
-
+        PlayerStore.addListener(Constants.PLAYER_SYNC, self.sync);
       };
       dom.addEventListener('loadeddata', onload);
     }

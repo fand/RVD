@@ -13,7 +13,7 @@ var CHANGE_EVENT = 'CHANGE_PLAYERSTORE';
 
 // Private Data
 var _bpm = 120;
-var _duration = 60.0 / _bpm;
+var _duration = 60 * 1000 / _bpm;
 var _pos = 0;
 var _timer;
 
@@ -32,9 +32,10 @@ function stop() {
 }
 
 function sync() {
-  //console.log(_pos);
   PlayerActions.sync(_pos++);
-  _timer = window.setTimeout(sync, _duration);
+  _timer = window.setTimeout(function () {
+    sync();
+  }, _duration);
 }
 
 var PlayerStore = merge(EventEmitter.prototype, {
@@ -53,6 +54,8 @@ var PlayerStore = merge(EventEmitter.prototype, {
     var action = payload.action;
 
     switch (action.actionType) {
+
+      // events sent by user
     case Constants.PLAYER_PLAY:
       play();
       PlayerStore.emit(Constants.PLAYER_PLAY);
@@ -68,10 +71,10 @@ var PlayerStore = merge(EventEmitter.prototype, {
       PlayerStore.emit(Constants.PLAYER_STOP);
       break;
 
-    case Constants.MODE_SYNC:
-      // sync is caught on Video ?????
-      // sync(action.mode);
-      // PlayerStore.emitChange();
+
+      // events sent by this self
+    case Constants.PLAYER_SYNC:
+      PlayerStore.emit(Constants.PLAYER_SYNC, _pos);
       break;
     }
   })
