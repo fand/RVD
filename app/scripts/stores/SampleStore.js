@@ -13,23 +13,27 @@ var Sample = require('../models/Sample');
 
 // Private Data
 var _samples = [];
+var _ids = {};
 var create = function (file) {
   if (! Sample.isValid(file)) { return; }
-  _samples.push(new Sample(file));
+  var sample = new Sample(file);
+  _samples.push(sample);
+  _ids[sample.id] = _samples.length - 1;
 };
 var destroy = function (id) {
   _samples = _samples.filter(function (s) {
     return (s.id !== id);
   });
+  delete _ids[id];
 };
 var createMultiple = function (files) {
   files.forEach(create);
 };
 
-var playAll = function () {
-
+var setPattern = function (id, pattern) {
+  var idx = _ids[id];
+  _samples[idx].setPattern(pattern);
 };
-
 
 var SampleStore = merge(EventEmitter.prototype, {
   getSamples: function () {
@@ -64,6 +68,11 @@ var SampleStore = merge(EventEmitter.prototype, {
       _.each(action.files, function (file) {
         create(file);
       });
+      SampleStore.emitChange();
+      break;
+
+    case Constants.SAMPLE_SET_PATTERN:
+      setPattern(action.id, action.pattern);
       SampleStore.emitChange();
       break;
 

@@ -12,7 +12,8 @@ var Sample = function (file) {
 
   this.time = 20.3;
   this.string = 'F4D6';
-  this.pattern = [1,1,1,1,0,1,0,0,1,1,0,1,0,1,1,0];
+  this.pattern = [];
+  this.setPattern(this.string);
 };
 Sample.prototype.getThumb = function (dom) {
   this.thumbUrl = Thumb(dom);
@@ -23,6 +24,20 @@ Sample.isValid = function (file) {
 
 Sample.prototype.getNote = function (time) {
   return this.pattern[time % this.pattern.length];
-}
+};
+
+Sample.prototype.setPattern = function (string) {
+  this.string = string.substr(0, 4);
+  var pattern = [];
+  for (var i = 0; i < string.length; i++) {
+    var bin = Number('0x' + string[i]).toString(2);
+    for (var j = 0; j < 4; j++) {
+      pattern.push((bin[j] && bin[j] === '1') ? true : false);
+    }
+  }
+  console.log(pattern);
+  this.pattern = pattern;
+};
+
 
 module.exports = Sample;

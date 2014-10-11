@@ -3,6 +3,7 @@
 
 var React = require('react');
 var Dropper = require('./Dropper');
+var SampleActions = require('../actions/SampleActions');
 
 var Config =  React.createClass({
   getInitialState: function () {
@@ -13,18 +14,14 @@ var Config =  React.createClass({
     };
   },
   onPatternChange: function (e) {
+    var newPattern = e.target.value;
     this.setState({
-      pattern: e.target.value
-    }, function () {
-      // console.log('pattern changed!!');
-      // console.log(this.state);
+      pattern: newPattern
     });
+    SampleActions.setPattern(this.props.sample.id, newPattern);
   },
   onDrop: function (addedSamples) {
-    var newSample = addedSamples[0];
-    SampleDispatcher.setSample
-    var newSamples = this.props.sample
-    this.props.onUpdate(newSamples);
+    //SampleActions.setSample(this.props.sample, addedSamples[0]);
   },
   render: function () {
     return (

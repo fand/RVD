@@ -20,6 +20,13 @@ var SampleActions = {
       files: files
     });
   },
+  setPattern: function (id, pattern) {
+    AppDispatcher.handleViewAction({
+      actionType: Constants.SAMPLE_SET_PATTERN,
+      id: id,
+      pattern: pattern
+    });
+  }
 };
 
 module.exports = SampleActions;
