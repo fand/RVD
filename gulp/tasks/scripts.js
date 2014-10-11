@@ -2,6 +2,9 @@ var gulp = require('gulp');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var source = require('vinyl-source-stream');
+var gutil = require('gulp-util');
+var gulpif = require('gulp-if');
+var reload = require('browser-sync').reload;
 
 // for 'watch' task
 var is_watching = false;
@@ -29,9 +32,10 @@ gulp.task('scripts', function () {
 
   var rebundle = function () {
     bundler.bundle()
-      .on('error', function(){console.error('Compile.error');})
+      .on('error', gutil.log.bind(gutil))
       .pipe(source('app.js'))
-      .pipe(gulp.dest('dist/scripts'));
+      .pipe(gulp.dest('dist/scripts'))
+      .pipe(gulpif(is_watching, reload({stream: true})));
   };
 
   if (is_watching) {

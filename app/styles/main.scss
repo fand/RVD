@@ -45,14 +45,26 @@ video {
 
   &.play-mode {
     top: -9999px;
-    z-index: 0;        
+    z-index: -1;
   }
   &.config-mode {
     top: 0px;
-    z-index: 20;    
+    z-index: 20;
+
+    .config {
+      @extend .fullscreen;
+      background: rgba(0, 0, 0, 0.2);
+
+      .dropper {
+        @extend .fullscreen;
+        z-index: 10;
+      }
+
+      .hexline, .hexline * {
+        position: absolute;
+        z-index: 30;
+      }
+    }
+
   }
 }
-/* .config { */
-/*   @extend .fullscreen; */
-/*   background: rgba(0, 0, 0, 0.2); */
-/* } */

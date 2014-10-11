@@ -2,9 +2,10 @@
 'use strict';
 
 var React = require('react');
-var c = require('../Caret');
+var PlayerStore = require('../stores/PlayerStore');
+var Constants = require('../Constants');
 
-var Sample = React.createClass({
+var Video = React.createClass({
   getInitialState: function () {
     return { paused: true };
   },
@@ -16,6 +17,19 @@ var Sample = React.createClass({
     this.refs.dom.getDOMNode().pause();
     this.setState({ paused: true });
   },
+  stop: function () {
+    this.refs.dom.getDOMNode().pause();
+    this.refs.dom.getDOMNode().currentTime = 0;
+    this.setState({ paused: true });
+  },
+  sync: function (time) {
+    this.refs.dom.getDOMNode().currentTime = this.props.sample.time;
+    if (this.props.sample.getNote(time)) {
+      this.play();
+    } else {
+      this.pause();
+    }
+  },
   setTime: function (time) {
     var dom = this.refs.dom.getDOMNode();
     if (dom.duration) {
@@ -24,12 +38,17 @@ var Sample = React.createClass({
     }
   },
   componentDidMount: function () {
+    var self = this;
     var dom = this.refs.dom.getDOMNode();
     if (! dom.duration) {
       var onload = function () {
-        this.setTime(0);
+        self.setTime(0);
         dom.removeEventListener('loadeddata', onload);
-      }.bind(this);
+
+        PlayerStore.addListener(Constants.PLAYER_PLAY, self.play);
+        PlayerStore.addListener(Constants.PLAYER_STOP, self.stop);
+        PlayerStore.addListener(Constants.PLAYER_SYNC, self.sync);
+      };
       dom.addEventListener('loadeddata', onload);
     }
   },
@@ -38,4 +57,4 @@ var Sample = React.createClass({
   }
 });
 
-module.exports = Sample;
+module.exports = Video;

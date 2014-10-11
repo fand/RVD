@@ -2,7 +2,8 @@
 'use strict';
 
 var React = require('react');
-var c = require('../Caret');
+var Dropper = require('./Dropper');
+var SampleActions = require('../actions/SampleActions');
 
 var Config =  React.createClass({
   getInitialState: function () {
@@ -13,16 +14,19 @@ var Config =  React.createClass({
     };
   },
   onPatternChange: function (e) {
+    var newPattern = e.target.value;
     this.setState({
-      pattern: e.target.value
-    }, function () {
-      // console.log('pattern changed!!');
-      // console.log(this.state);
+      pattern: newPattern
     });
+    SampleActions.setPattern(this.props.sample.id, newPattern);
+  },
+  onDrop: function (addedSamples) {
+    //SampleActions.setSample(this.props.sample, addedSamples[0]);
   },
   render: function () {
     return (
       <div className="config">
+        <Dropper onDrop={this.onDrop} />
         <img src={this.props.sample.thumbUrl} />
         <span className="hexline">
           0x<input type="text" onChange={this.onPatternChange} value={this.state.pattern} />
