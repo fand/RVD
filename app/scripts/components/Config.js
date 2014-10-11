@@ -3,6 +3,7 @@
 
 var React = require('react');
 var Dropper = require('./Dropper');
+var HexLine = require('./HexLine');
 var SampleActions = require('../actions/SampleActions');
 
 var Config =  React.createClass({
@@ -28,9 +29,7 @@ var Config =  React.createClass({
       <div className="config">
         <Dropper onDrop={this.onDrop} />
         <img src={this.props.sample.thumbUrl} />
-        <span className="hexline">
-          0x<input type="text" onChange={this.onPatternChange} value={this.state.pattern} />
-        </span>
+        <HexLine onChange={this.onPatternChange} value={this.state.pattern} />
       </ div>
     );
   }
