@@ -10,7 +10,7 @@ gulp.task('watch', ['html', 'bundle', 'webserver'], function () {
   gulp.watch('app/*.html', ['html']);
 
   // Watch .scss files
-  gulp.watch('app/styles/**/*.scss', ['styles']);
+  gulp.watch('app/styles/**/*.scss', ['styles-watch']);
 
   // Watch .js or .coffee files
   gulp.watch(['app/scripts/**/*.js', 'app/scripts/**/*.coffee'], ['scripts-watch']);
