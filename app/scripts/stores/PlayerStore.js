@@ -13,7 +13,7 @@ var CHANGE_EVENT = 'CHANGE_PLAYERSTORE';
 
 // Private Data
 var _bpm = 120;
-var _duration = 60 * 1000 / _bpm;
+var _duration = (60 / 4) * 1000 / _bpm;
 var _pos = 0;
 var _timer;
 

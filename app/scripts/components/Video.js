@@ -24,10 +24,10 @@ var Video = React.createClass({
   },
   sync: function (time) {
     this.refs.dom.getDOMNode().currentTime = this.props.sample.time;
-    if (this.props.sample.getNote(time)) {console.log(1);
-      this.refs.dom.getDOMNode().play();
-    } else {console.log(0);
-      this.refs.dom.getDOMNode().pause();
+    if (this.props.sample.getNote(time)) {
+      this.play();
+    } else {
+      this.pause();
     }
   },
   setTime: function (time) {
