@@ -31,8 +31,12 @@ Sample.prototype.setPattern = function (string) {
   var pattern = [];
   for (var i = 0; i < string.length; i++) {
     var bin = Number('0x' + string[i]).toString(2);
-    for (var j = 0; j < 4; j++) {
-      pattern.push((bin[j] && bin[j] === '1') ? true : false);
+    var zeropad = 4 - bin.length;
+    for (var j = 0; j < zeropad; j++) {
+      pattern.push(false);
+    }
+    for (j = 0; j < bin.length; j++) {
+      pattern.push((bin[j] === '1') ? true : false);
     }
   }
   console.log(pattern);
