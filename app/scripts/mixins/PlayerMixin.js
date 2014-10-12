@@ -14,10 +14,10 @@ function toggle() {
   isPlaying = !(isPlaying);
 }
 
-var Player = {
+var PlayerMixin = {
   componentDidMount: function () {
     Mousetrap.bind('space', toggle);
   }
 };
 
-module.exports = Player;
+module.exports = PlayerMixin;
