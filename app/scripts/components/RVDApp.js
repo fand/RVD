@@ -13,7 +13,7 @@ var Player = require('../mixins/Player');
 
 var getState = function () {
   return {
-    samples: SampleStore.getAllSamples(),
+    samples: SampleStore.getSamples(),
     mode: ModeStore.getMode()
   }
 };
@@ -25,10 +25,7 @@ var getState = function () {
 var RVDApp = React.createClass({
   mixins: [Player],
   getInitialState: function() {
-    return {
-      mode: 'play',
-      samples: []
-    };
+    return getState();
   },
   componentDidMount: function () {
     SampleStore.addListener(this.onSamplesUpdate);
@@ -50,7 +47,9 @@ var RVDApp = React.createClass({
         <h1>RVD</h1>
         <SamplesManager samples={this.state.samples} />
         <VideoList samples={this.state.samples} />
-        <ConfigList samples={this.state.samples} />
+        <ConfigList
+          samples={this.state.samples}
+          mode={this.state.mode} />
       </div>
     );
   }
