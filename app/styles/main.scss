@@ -60,9 +60,31 @@ video {
         z-index: 10;
       }
 
+      img {
+        @extend .fullscreen;
+        opacity: 0.7;
+      }
+
       .hexline, .hexline * {
         position: absolute;
         z-index: 30;
+
+        .hexline-display {
+          font-family: Helvetica, Arial, sans-serif;
+          font-style: italic;
+
+          color: #eee;
+
+          span {
+            font-size: 192px;
+            position: relative;
+            display: inline;
+          }
+        }
+        .hexline-invert {
+          background: #8fe;
+          color: #000;
+        }
       }
     }
 

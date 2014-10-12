@@ -8,7 +8,7 @@ var SampleActions = require('../actions/SampleActions');
 
 var getState = function (sample) {
   return {
-    patter: sample.string
+    pattern: sample.string
   };
 };
 
@@ -16,8 +16,7 @@ var Config =  React.createClass({
   getInitialState: function () {
     return getState(this.props.sample);
   },
-  onPatternChange: function (e) {
-    var newPattern = e.target.value;
+  onPatternChange: function (newPattern) {
     this.setState({
       pattern: newPattern
     });

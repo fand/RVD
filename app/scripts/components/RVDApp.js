@@ -7,6 +7,7 @@ var VideoList = require('./VideoList');
 var ConfigList = require('./ConfigList');
 var SampleStore = require('../stores/SampleStore');
 var ModeStore = require('../stores/ModeStore');
+var KeyStore = require('../stores/KeyStore');
 var KeyActions = require('../actions/KeyActions');
 
 var PlayerMixin = require('../mixins/PlayerMixin');
