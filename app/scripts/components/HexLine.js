@@ -81,7 +81,7 @@ var HexLine = React.createClass({
     var newStr = str.substring(0, pos) + key + str.substring(pos + 1)
     this.props.onChange(newStr);
 
-    if (pos === 8) {
+    if (pos === 8 && this.state.y == 0) {
       this.setState({
         x: 0, y: 1
       });

@@ -29,7 +29,7 @@ Sample.prototype.getNote = function (time) {
 Sample.prototype.setPattern = function (string) {
   string = string
     .substr(0, 16)
-    .replace(/-*\z/, '')
+    .replace(/-*$/, '')
     .replace(/-/g, '0');
   var len = string.length;
 
