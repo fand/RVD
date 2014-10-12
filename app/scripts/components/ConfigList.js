@@ -4,10 +4,8 @@
 var React = require('react');
 var Config = require('./Config');
 
-
 var ConfigList = React.createClass({
   componentDidMount: function () {
-
   },
   render: function () {
     var configs = this.props.samples.map(function (sample) {

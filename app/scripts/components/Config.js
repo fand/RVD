@@ -5,17 +5,16 @@ var React = require('react');
 var Dropper = require('./Dropper');
 var HexLine = require('./HexLine');
 var SampleActions = require('../actions/SampleActions');
-var KeyStore = require('../stores/keyStore');
+
+var getState = function (sample) {
+  return {
+    patter: sample.string
+  };
+};
 
 var Config =  React.createClass({
   getInitialState: function () {
-    var key = KeyStore.next();
-    return {
-      time: 0,
-      rate: 1.0,
-      pattern: '888a',
-      key: key
-    };
+    return getState(this.props.sample);
   },
   onPatternChange: function (e) {
     var newPattern = e.target.value;

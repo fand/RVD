@@ -19,8 +19,6 @@ var unbind = function (key) {
 };
 
 
-
-
 var KeyStore = merge(EventEmitter.prototype, {
   emitChange: function () {
     this.emit(CHANGE_EVENT);

@@ -7,8 +7,10 @@ var VideoList = require('./VideoList');
 var ConfigList = require('./ConfigList');
 var SampleStore = require('../stores/SampleStore');
 var ModeStore = require('../stores/ModeStore');
+var KeyActions = require('../actions/KeyActions');
 
-var Player = require('../mixins/Player');
+var PlayerMixin = require('../mixins/PlayerMixin');
+var ModeMixin = require('../mixins/ModeMixin');
 
 
 var getState = function () {
@@ -23,7 +25,7 @@ var getState = function () {
  * Holds models of mode, samples.
  */
 var RVDApp = React.createClass({
-  mixins: [Player],
+  mixins: [PlayerMixin, ModeMixin],
   getInitialState: function() {
     return getState();
   },
