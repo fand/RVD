@@ -4,7 +4,7 @@
 var React = require('react');
 var KeyActions = require('../actions/KeyActions');
 
-var hexkeys = ('0123456789abcdef').split('');
+var hexkeys = ('0123456789abcdefABCDEF').split('');
 
 var HexLine = React.createClass({
   getInitialState: function () {
@@ -29,46 +29,65 @@ var HexLine = React.createClass({
       });
     });
     KeyActions.bind('up', function (e) {
-      self.ifFocusedThen(e, function () {
-        if (self.state.y > 0) {
-          self.setState({
-            y: self.state.y + 1
-          });
-        }
-      });
+      self.ifFocusedThen(e, self._moveUp);
     });
     KeyActions.bind('down', function (e) {
-      self.ifFocusedThen(e, function () {
-        if (self.state.y < 1) {
-          self.setState({
-            y: self.state.y - 1
-          });
-        }
-      });
+      self.ifFocusedThen(e, self._moveDown);
     });
     KeyActions.bind('left', function (e) {
-      self.ifFocusedThen(e, function () {
-        if (self.state.x > 0) {
-          self.setState({
-            x: self.state.x - 1
-          });
-        }
-      });
+      self.ifFocusedThen(e, self._moveLeft);
     });
     KeyActions.bind('right', function (e) {
+      self.ifFocusedThen(e, self._moveRight);
+    });
+    KeyActions.bind(['del', 'backspace'], function (e) {
+      var pos = self.state.y * 8 + self.state.x;
       self.ifFocusedThen(e, function () {
-        if (self.state.x < self.props.value.length - 1) {
-          self.setState({
-            x: self.state.x + 1
-          });
-        }
-      });
+        var str = self.props.sample.string;
+        self.props.onChange(str.substring(0, pos) + str.substring(pos + 1));
+      })
     });
   },
+  _moveRight: function () {
+    var nbsp = (this.props.sample.string.length <= 8) ? 1 : 0;
+    if (this.state.x < 7 + nbsp) {
+        this.setState({ x: this.state.x + 1 });
+    }
+  },
+  _moveLeft: function () {
+    if (this.state.x > 0) {
+      this.setState({
+        x: this.state.x - 1
+      });
+    }
+  },
+  _moveUp: function () {
+    if (this.state.y > 0) {
+      this.setState({
+        y: this.state.y - 1
+      });
+    }
+  },
+  _moveDown: function () {
+    if (this.state.y < 1) {
+      this.setState({
+        y: this.state.y + 1
+      });
+    }
+  },
   onKeyPressed: function (key) {
-    var str = this.props.value;
-    var newStr = str.substr(0, this.state.x) + key + str.substr(this.state.x + 1)
+    var str = this.props.sample.string;
+    var pos = this.state.y * 8 + this.state.x;
+    var newStr = str.substring(0, pos) + key + str.substring(pos + 1)
     this.props.onChange(newStr);
+
+    if (pos === 8) {
+      this.setState({
+        x: 0, y: 1
+      });
+    } else {
+      this._moveRight();
+    }
   },
   onClick: function () {
     this.setState({
@@ -80,16 +99,18 @@ var HexLine = React.createClass({
       isFocused: false
     });
   },
-  onChange: function (e) {
-    this.props.onChange(e);
+  onChange: function (str) {
+    this.props.onChange(str);
   },
-  render: function () {
-    var str = this.props.value;
+  renderOneLine: function () {
+    var str = this.props.sample.string + '　';
     var display = (
       <span className="hexline-display">
-        <span>{'0x' + str.substr(0, this.state.x)}</span>
-        <span className="hexline-invert">{str[this.state.x]}</span>
-        <span>{str.substr(this.state.x + 1)}</span>
+        <span className="line">
+          <span>{'0x' + str.substring(0, this.state.x)}</span>
+          <span className="hexline-invert">{str[this.state.x]}</span>
+          <span>{str.substring(this.state.x + 1)}</span>
+        </span>
       </span>
     );
     return (
@@ -97,6 +118,49 @@ var HexLine = React.createClass({
         {display}
       </span>
     );
+  },
+  renderTwoLine: function () {
+    var str = this.props.sample.string;
+    var display;
+    if (this.state.y === 0) {
+      display = (
+        <span className="hexline-display">
+          <span className="line">
+            <span>{'0x' + str.substring(0, this.state.x)}</span>
+            <span className="hexline-invert">{str[this.state.x]}</span>
+            <span>{str.substring(this.state.x + 1, 8)}</span>
+          </span>
+          <span className="line">
+            <span>{'0x' + str.substring(8)}</span>
+          </span>
+        </span>
+      );
+    } else {
+      display = (
+        <span className="hexline-display">
+          <span className="line">
+            <span>{'0x' + str.substring(0, 8)}</span>
+          </span>
+          <span className="line">
+            <span>{'0x' + str.substring(8, 8 + this.state.x)}</span>
+            <span className="hexline-invert">{str[8 + this.state.x]}</span>
+            <span>{str.substring(this.state.x + 9)}</span>
+          </span>
+        </span>
+      )
+    }
+    return (
+      <span className="hexline" onClick={this.onClick} onBlur={this.onBlur}>
+        {display}
+      </span>
+    );
+  },
+  render: function () {
+    if (this.props.sample.string.length <= 8) {
+      return this.renderOneLine();
+    } else {
+      return this.renderTwoLine();
+    }
   }
 });
 

@@ -80,9 +80,12 @@ video {
             position: relative;
             display: inline;
           }
+          .line {
+            display: block;
+          }
         }
         .hexline-invert {
-          background: #8fe;
+          background: #0df;
           color: #000;
         }
       }

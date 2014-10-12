@@ -30,7 +30,7 @@ var Config =  React.createClass({
       <div className="config">
         <Dropper onDrop={this.onDrop} />
         <img src={this.props.sample.thumbUrl} />
-        <HexLine onChange={this.onPatternChange} value={this.state.pattern} />
+        <HexLine onChange={this.onPatternChange} sample={this.props.sample} />
       </ div>
     );
   }
