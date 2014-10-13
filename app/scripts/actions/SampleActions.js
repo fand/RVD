@@ -26,6 +26,13 @@ var SampleActions = {
       id: id,
       pattern: pattern
     });
+  },
+  setSample: function (id, file) {
+    AppDispatcher.handleViewAction({
+      actionType: Constants.SAMPLE_SET_SAMPLE,
+      id: id,
+      file: file
+    });
   }
 };
 

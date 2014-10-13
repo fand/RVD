@@ -35,8 +35,13 @@ var setPattern = function (id, pattern) {
   _samples[idx].setPattern(pattern);
 };
 
+var setSample = function (id, sample) {
+  var idx = _ids[id];
+  _samples[idx].setSample(sample);
+};
+
 var SampleStore = merge(EventEmitter.prototype, {
-  hasSamples: function () {console.log(_samples);
+  hasSamples: function () {
     return (_samples.length > 0);
   },
   getSamples: function () {
@@ -76,6 +81,11 @@ var SampleStore = merge(EventEmitter.prototype, {
 
     case Constants.SAMPLE_SET_PATTERN:
       setPattern(action.id, action.pattern);
+      SampleStore.emitChange();
+      break;
+
+    case Constants.SAMPLE_SET_SAMPLE:
+      setSample(action.id, action.file);
       SampleStore.emitChange();
       break;
 

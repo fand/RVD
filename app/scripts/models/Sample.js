@@ -5,10 +5,7 @@ var Thumb = require('../Thumb');
 var count = 0;
 var Sample = function (file) {
   this.id = count++;
-  this.file = file;
-  this.type = file.type;
-  this.name = file.name;
-  this.url = URL.createObjectURL(this.file);
+  this.setSample(file);
 
   this.time = 20.3;
   this.string = 'F4D6A6DC';
@@ -27,12 +24,14 @@ Sample.prototype.getNote = function (time) {
 };
 
 Sample.prototype.setPattern = function (string) {
+  // Format input pattern
   string = string
     .substr(0, 16)
     .replace(/-*$/, '')
     .replace(/-/g, '0');
   var len = string.length;
 
+  // Create new pattern for input string
   var pattern = [];
   for (var i = 0; i < len; i++) {
     var bin = Number('0x' + string[i]).toString(2);
@@ -45,7 +44,7 @@ Sample.prototype.setPattern = function (string) {
     }
   }
 
-  // pad to fit the length to 4, 8, or 16.
+  // Pad to fit the length to 4, 8, or 16.
   var pad =
         (8 < len) ?  16 - len :
         (4 < len) ?  8 - len : 4 - len;
@@ -60,6 +59,13 @@ Sample.prototype.setPattern = function (string) {
   }
   this.string = string + s_tail.join('');
   this.pattern = pattern.concat(p_tail);
+};
+
+Sample.prototype.setSample = function (file) {
+  this.file = file;
+  this.type = file.type;
+  this.name = file.name;
+  this.url = URL.createObjectURL(this.file);
 };
 
 
