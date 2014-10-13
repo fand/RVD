@@ -48,7 +48,7 @@ var RVDApp = React.createClass({
     return (
       <div>
         <h1>RVD</h1>
-        <SamplesManager samples={this.state.samples} />
+        <SamplesManager samples={this.state.samples} mode={this.state.mode}/>
         <VideoList samples={this.state.samples} />
         <ConfigList
           samples={this.state.samples}
