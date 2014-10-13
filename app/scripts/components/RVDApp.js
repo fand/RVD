@@ -7,13 +7,16 @@ var VideoList = require('./VideoList');
 var ConfigList = require('./ConfigList');
 var SampleStore = require('../stores/SampleStore');
 var ModeStore = require('../stores/ModeStore');
+var KeyStore = require('../stores/KeyStore');
+var KeyActions = require('../actions/KeyActions');
 
-var Player = require('../mixins/Player');
+var PlayerMixin = require('../mixins/PlayerMixin');
+var ModeMixin = require('../mixins/ModeMixin');
 
 
 var getState = function () {
   return {
-    samples: SampleStore.getAllSamples(),
+    samples: SampleStore.getSamples(),
     mode: ModeStore.getMode()
   }
 };
@@ -23,12 +26,9 @@ var getState = function () {
  * Holds models of mode, samples.
  */
 var RVDApp = React.createClass({
-  mixins: [Player],
+  mixins: [PlayerMixin, ModeMixin],
   getInitialState: function() {
-    return {
-      mode: 'play',
-      samples: []
-    };
+    return getState();
   },
   componentDidMount: function () {
     SampleStore.addListener(this.onSamplesUpdate);
@@ -50,7 +50,9 @@ var RVDApp = React.createClass({
         <h1>RVD</h1>
         <SamplesManager samples={this.state.samples} />
         <VideoList samples={this.state.samples} />
-        <ConfigList samples={this.state.samples} />
+        <ConfigList
+          samples={this.state.samples}
+          mode={this.state.mode} />
       </div>
     );
   }

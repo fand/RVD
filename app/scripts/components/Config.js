@@ -3,18 +3,20 @@
 
 var React = require('react');
 var Dropper = require('./Dropper');
+var HexLine = require('./HexLine');
 var SampleActions = require('../actions/SampleActions');
+
+var getState = function (sample) {
+  return {
+    pattern: sample.string
+  };
+};
 
 var Config =  React.createClass({
   getInitialState: function () {
-    return {
-      time: 0,
-      rate: 1.0,
-      pattern: '888a'
-    };
+    return getState(this.props.sample);
   },
-  onPatternChange: function (e) {
-    var newPattern = e.target.value;
+  onPatternChange: function (newPattern) {
     this.setState({
       pattern: newPattern
     });
@@ -28,9 +30,7 @@ var Config =  React.createClass({
       <div className="config">
         <Dropper onDrop={this.onDrop} />
         <img src={this.props.sample.thumbUrl} />
-        <span className="hexline">
-          0x<input type="text" onChange={this.onPatternChange} value={this.state.pattern} />
-        </span>
+        <HexLine onChange={this.onPatternChange} sample={this.props.sample} />
       </ div>
     );
   }

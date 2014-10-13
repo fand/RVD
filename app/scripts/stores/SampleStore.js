@@ -36,6 +36,9 @@ var setPattern = function (id, pattern) {
 };
 
 var SampleStore = merge(EventEmitter.prototype, {
+  hasSamples: function () {console.log(_samples);
+    return (_samples.length > 0);
+  },
   getSamples: function () {
     return _samples;
   },

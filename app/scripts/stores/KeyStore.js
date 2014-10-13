@@ -5,26 +5,21 @@ var EventEmitter = require('events');
 var merge = require('react/lib/merge');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var Constants = require('../Constants');
-var CHANGE_EVENT = 'CHANGE_MODESTORE';
+var CHANGE_EVENT = 'CHANGE_KEYSTORE';
 
-var SampleStore = require('../stores/SampleStore');
+var Mousetrap = require('mousetrap');
 
-// Private Data
-var _mode = 'play';
-var toggle = function () {
-  if (SampleStore.hasSamples()) {
-    _mode = (_mode === 'play') ? 'config' : 'play';
-  }
+var _keybinds = {};
+
+var bind = function (key, listener) {
+  Mousetrap.bind(key, listener);
 };
-var set = function (newMode) {
-  _mode = newMode;
+var unbind = function (key) {
+  Mousetrap.unbind(key);
 };
 
 
-var ModeStore = merge(EventEmitter.prototype, {
-  getMode: function () {
-    return _mode;
-  },
+var KeyStore = merge(EventEmitter.prototype, {
   emitChange: function () {
     this.emit(CHANGE_EVENT);
   },
@@ -40,18 +35,18 @@ var ModeStore = merge(EventEmitter.prototype, {
     var action = payload.action;
 
     switch (action.actionType) {
-    case Constants.MODE_TOGGLE:
-      toggle();
-      ModeStore.emitChange();
+    case Constants.KEY_BIND:
+      bind(action.key, action.listener);
+      KeyStore.emitChange();
       break;
 
-    case Constants.MODE_SET:
-      set(action.mode);
-      ModeStore.emitChange();
+    case Constants.KEY_UNBIND:
+      unbind(action.key);
+      KeyStore.emitChange();
       break;
     }
   })
 });
 
 
-module.exports = ModeStore;
+module.exports = KeyStore;

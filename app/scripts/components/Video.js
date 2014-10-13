@@ -10,6 +10,7 @@ var Video = React.createClass({
     return { paused: true };
   },
   play: function () {
+    this.refs.dom.getDOMNode().currentTime = this.props.sample.time;
     this.refs.dom.getDOMNode().play();
     this.setState({ paused: false });
   },
@@ -23,7 +24,6 @@ var Video = React.createClass({
     this.setState({ paused: true });
   },
   sync: function (time) {
-    this.refs.dom.getDOMNode().currentTime = this.props.sample.time;
     if (this.props.sample.getNote(time)) {
       this.play();
     } else {

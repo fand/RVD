@@ -14,4 +14,7 @@ module.exports = keyMirror({
   PLAYER_STOP: null,
   PLAYER_SYNC: null,
 
+  KEY_BIND: null,
+  KEY_UNBIND: null,
+
 });
