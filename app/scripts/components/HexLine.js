@@ -49,36 +49,31 @@ var HexLine = React.createClass({
     });
   },
   _moveRight: function () {
+    var lim = (this.props.sample.string.length <= 4) ? 3 : 7;
     var nbsp = (this.props.sample.string.length <= 8) ? 1 : 0;
-    if (this.state.x < 7 + nbsp) {
-        this.setState({ x: this.state.x + 1 });
+    if (this.state.x < lim + nbsp) {
+      this.setState({ x: this.state.x + 1 });
     }
   },
   _moveLeft: function () {
     if (this.state.x > 0) {
-      this.setState({
-        x: this.state.x - 1
-      });
+      this.setState({ x: this.state.x - 1 });
     }
   },
   _moveUp: function () {
     if (this.state.y > 0) {
-      this.setState({
-        y: this.state.y - 1
-      });
+      this.setState({ y: this.state.y - 1 });
     }
   },
   _moveDown: function () {
     if (this.state.y < 1) {
-      this.setState({
-        y: this.state.y + 1
-      });
+      this.setState({ y: this.state.y + 1 });
     }
   },
   onKeyPressed: function (key) {
     var str = this.props.sample.string;
     var pos = this.state.y * 8 + this.state.x;
-    var newStr = str.substring(0, pos) + key + str.substring(pos + 1)
+    var newStr = (str.substring(0, pos) + key + str.substring(pos + 1)).toUpperCase();
     this.props.onChange(newStr);
 
     if (pos === 8 && this.state.y == 0) {
@@ -104,7 +99,7 @@ var HexLine = React.createClass({
   },
   renderOneLine: function () {
     var str = this.props.sample.string + '　';
-    var display = (
+    return (
       <span className="hexline-display">
         <span className="line">
           <span>{'0x' + str.substring(0, this.state.x)}</span>
@@ -113,17 +108,11 @@ var HexLine = React.createClass({
         </span>
       </span>
     );
-    return (
-      <span className="hexline" onClick={this.onClick} onBlur={this.onBlur}>
-        {display}
-      </span>
-    );
   },
   renderTwoLine: function () {
     var str = this.props.sample.string;
-    var display;
     if (this.state.y === 0) {
-      display = (
+      return (
         <span className="hexline-display">
           <span className="line">
             <span>{'0x' + str.substring(0, this.state.x)}</span>
@@ -136,7 +125,7 @@ var HexLine = React.createClass({
         </span>
       );
     } else {
-      display = (
+      return (
         <span className="hexline-display">
           <span className="line">
             <span>{'0x' + str.substring(0, 8)}</span>
@@ -149,18 +138,22 @@ var HexLine = React.createClass({
         </span>
       )
     }
+  },
+  render: function () {
+    var display;
+    if (this.props.sample.string.length <= 8) {
+      display = this.renderOneLine();
+    } else {
+      display = this.renderTwoLine();
+    }
+
+    var suffix = (this.state.isFocused) ? ' focused' : '';
     return (
-      <span className="hexline" onClick={this.onClick} onBlur={this.onBlur}>
+      <span className={"hexline" + suffix} onClick={this.onClick} onBlur={this.onBlur}>
         {display}
       </span>
     );
-  },
-  render: function () {
-    if (this.props.sample.string.length <= 8) {
-      return this.renderOneLine();
-    } else {
-      return this.renderTwoLine();
-    }
+
   }
 });
 
