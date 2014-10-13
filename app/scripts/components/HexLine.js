@@ -47,6 +47,9 @@ var HexLine = React.createClass({
         self.props.onChange(str.substring(0, pos) + str.substring(pos + 1));
       })
     });
+    KeyActions.bind(['enter'], function (e) {
+      self.setState({ isFocused: false });
+    });
   },
   _moveRight: function () {
     var lim = (this.props.sample.string.length <= 4) ? 3 : 7;

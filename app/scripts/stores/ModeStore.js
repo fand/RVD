@@ -7,10 +7,14 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var Constants = require('../Constants');
 var CHANGE_EVENT = 'CHANGE_MODESTORE';
 
+var SampleStore = require('../stores/SampleStore');
+
 // Private Data
 var _mode = 'play';
 var toggle = function () {
-  _mode = (_mode === 'play') ? 'config' : 'play';
+  if (SampleStore.hasSamples()) {
+    _mode = (_mode === 'play') ? 'config' : 'play';
+  }
 };
 var set = function (newMode) {
   _mode = newMode;
