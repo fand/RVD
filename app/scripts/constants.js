@@ -8,7 +8,7 @@ module.exports = keyMirror({
   SAMPLE_SET_SAMPLE: null,
   SAMPLE_SET_PATTERN: null,
   SAMPLE_SET_TIME: null,
-  SAMPLE_SET_RATE: null,
+  SAMPLE_SET_DOM: null,
 
   PLAYER_PLAY: null,
   PLAYER_STOP: null,

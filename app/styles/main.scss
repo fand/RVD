@@ -14,32 +14,50 @@ body {
   overflow: hidden;
 }
 
-.fullscreen {
+#app {
   position: fixed;
   margin: 0; padding: 0;
   top: 0; left: 0;
   width: 100%; height: 100%;
+  overflow: hidden;
 }
+
 .wrapscreen {
-  position: fixed;
   margin: 0; padding: 0;
-  top: 0; left: 0;
   min-width: 100%; min-height: 100%;
+}
+.fullscreen {
+  @extend .wrapscreen;
+  position: fixed;
+  top: 0; left: 0;
 }
 
 .dropper {
-  @extend .fullscreen;
+
   z-index: 10;
-  opacity: 0;
-  &.over {
-    box-shadow: 0px 0px 10px 10px #FF0 inset;
-    opacity: 0.3;
+  &.hide {
+    display: none;
   }
+
+  .dropper-mask {
+    z-index: -1;
+    pointer-events: none;
+
+    &.over {
+      @extend .fullscreen;
+      content: '';
+      z-index: 100;
+      background: rgba(200, 100, 150, 0.3);
+    }
+  }
+}
+
+.sample-manager .dropper {
+  @extend .fullscreen;
 }
 
 video {
   @extend .fullscreen;
-  //max-height: 200px; margin: 10px;
   &.paused {
     top: -9999px;
   }
@@ -47,35 +65,51 @@ video {
 
 .configList {
   @extend .fullscreen;
-
-
   &.play-mode {
     top: -9999px;
     z-index: -1;
+
+    .config {
+      display: none;
+    }
   }
   &.config-mode {
     top: 0px;
     z-index: 20;
-
-    .config {
-      @extend .fullscreen;
-      background: rgba(0, 0, 0, 0.2);
-
-      .dropper {
-        @extend .fullscreen;
-        z-index: 10;
-      }
-
-      img {
-        @extend .fullscreen;
-        opacity: 0.7;
-      }
-
-    }
-
   }
 }
 
+.config {
+  @extend .wrapscreen;
+  position: absolute;
+  top: 0px;
+  background: rgba(0, 0, 0, 0.2);
+
+  img {
+    @extend .wrapscreen;
+    position: absolute;
+    top: 0; left: 0;
+    opacity: 0.5;
+  }
+
+  .dropper {
+    @extend .wrapscreen;
+    position: absolute;
+    top: 0; left: 0;
+  }
+
+  overflow: hidden;
+  transition: left .1s linear 0, top .1s linear 0;
+}
+.config-active {
+  left: 0;
+}
+.config-right {
+  left: 100%;
+}
+.config-left {
+  left: -100%;
+}
 
 .hexline, .hexline * {
   position: absolute;

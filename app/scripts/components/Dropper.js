@@ -42,15 +42,24 @@ var Dropper = React.createClass({
   },
   render: function() {
     var cls = 'dropper';
-    if (this.state.over) {
-      cls += ' over'
+    if (this.props.hide) {
+      cls += ' hide';
     }
+
+    var maskCls = 'dropper-mask';
+    if (this.state.over) {
+      maskCls += ' over'
+    }
+
     return (
       <div className={cls}
         onDragEnter={this.onDragEnter}
         onDragLeave={this.onDragLeave}
         onDragOver={this.onDragOver}
-        onDrop={this.onDrop} />
+        onDrop={this.onDrop}>
+        <div className={maskCls} />
+        {this.props.children}
+      </div>
     );
   }
 });

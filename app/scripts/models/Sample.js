@@ -1,22 +1,16 @@
 'use strict';
 
-var Thumb = require('../Thumb');
+var Thumb = require('../util/Thumb');
 
 var count = 0;
 var Sample = function (file) {
   this.id = count++;
-  this.file = file;
-  this.type = file.type;
-  this.name = file.name;
-  this.url = URL.createObjectURL(this.file);
+  this.setSample(file);
 
-  this.time = 20.3;
+  this.time = 0;
   this.string = 'F4D6A6DC';
   this.pattern = [];
   this.setPattern(this.string);
-};
-Sample.prototype.getThumb = function (dom) {
-  this.thumbUrl = Thumb(dom);
 };
 Sample.isValid = function (file) {
   return (file && file.type && file.type.match(/video|audio/i));
@@ -27,12 +21,14 @@ Sample.prototype.getNote = function (time) {
 };
 
 Sample.prototype.setPattern = function (string) {
+  // Format input pattern
   string = string
     .substr(0, 16)
     .replace(/-*$/, '')
     .replace(/-/g, '0');
   var len = string.length;
 
+  // Create new pattern for input string
   var pattern = [];
   for (var i = 0; i < len; i++) {
     var bin = Number('0x' + string[i]).toString(2);
@@ -45,7 +41,7 @@ Sample.prototype.setPattern = function (string) {
     }
   }
 
-  // pad to fit the length to 4, 8, or 16.
+  // Pad to fit the length to 4, 8, or 16.
   var pad =
         (8 < len) ?  16 - len :
         (4 < len) ?  8 - len : 4 - len;
@@ -62,5 +58,29 @@ Sample.prototype.setPattern = function (string) {
   this.pattern = pattern.concat(p_tail);
 };
 
+Sample.prototype.setSample = function (file) {
+  this.file = file;
+  this.type = file.type;
+  this.name = file.name;
+  this.url = URL.createObjectURL(this.file);
+  if (this.dom) {
+    this.dom.src = this.url;
+  }
+};
+
+Sample.prototype.setTime = function (time) {
+  this.time = time;
+  this.updateThumb();
+};
+
+Sample.prototype.setDOM = function (dom) {
+  this.dom = dom;
+  this.updateThumb();
+};
+
+Sample.prototype.updateThumb = function () {
+  if (!this.dom) { return; }
+  this.thumbUrl = Thumb(this.dom);
+};
 
 module.exports = Sample;

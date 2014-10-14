@@ -22,15 +22,17 @@ var Config =  React.createClass({
     });
     SampleActions.setPattern(this.props.sample.id, newPattern);
   },
-  onDrop: function (addedSamples) {
-    //SampleActions.setSample(this.props.sample, addedSamples[0]);
+  onDrop: function (newFiles) {
+    SampleActions.setSample(this.props.sample.id, newFiles[0]);
   },
   render: function () {
+    var cls = 'config ' + this.props.className;
     return (
-      <div className="config">
-        <Dropper onDrop={this.onDrop} />
-        <img src={this.props.sample.thumbUrl} />
-        <HexLine onChange={this.onPatternChange} sample={this.props.sample} />
+      <div className={cls}>
+        <Dropper onDrop={this.onDrop}>
+          <img src={this.props.sample.thumbUrl} />
+          <HexLine onChange={this.onPatternChange} sample={this.props.sample} />
+        </Dropper>
       </ div>
     );
   }

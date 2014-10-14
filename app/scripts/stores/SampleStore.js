@@ -35,21 +35,41 @@ var setPattern = function (id, pattern) {
   _samples[idx].setPattern(pattern);
 };
 
+var setSample = function (id, sample) {
+  var idx = _ids[id];
+  _samples[idx].setSample(sample);
+};
+
+var setDOM = function (id, dom) {
+  var idx = _ids[id];
+  _samples[idx].setDOM(dom);
+};
+
+var setTime = function (id, sample) {
+  var idx = _ids[id];
+  _samples[idx].setTime(sample);
+};
+
+var updateThumb = function (id) {
+  var idx = _ids[id];
+  _samples[idx].updateThumb();
+};
+
 var SampleStore = merge(EventEmitter.prototype, {
-  hasSamples: function () {console.log(_samples);
+  hasSamples: function () {
     return (_samples.length > 0);
   },
   getSamples: function () {
     return _samples;
   },
   emitChange: function () {
-    this.emit(CHANGE_EVENT);
+    this.emit(Constants.SAMPLE_CHANGE);
   },
-  addListener: function (callback) {
-    this.on(CHANGE_EVENT, callback);
+  addListener: function (e, callback) {
+    this.on(e, callback);
   },
-  removeListener: function (callback) {
-    this.removeListener(CHANGE_EVENT, callback);
+  removeListener: function (e, callback) {
+    this.removeListener(e, callback);
   },
 
   // イベント受信時の動作を登録
@@ -76,6 +96,27 @@ var SampleStore = merge(EventEmitter.prototype, {
 
     case Constants.SAMPLE_SET_PATTERN:
       setPattern(action.id, action.pattern);
+      SampleStore.emitChange();
+      break;
+
+    case Constants.SAMPLE_SET_SAMPLE:
+      setSample(action.id, action.file);
+      SampleStore.emit(Constants.SAMPLE_SET_SAMPLE);
+      SampleStore.emitChange();
+      break;
+
+    case Constants.SAMPLE_SET_TIME:
+      setTime(action.id, action.time);
+      SampleStore.emitChange();
+      break;
+
+    case Constants.SAMPLE_SET_DOM:
+      setDOM(action.id, action.dom);
+      SampleStore.emitChange();
+      break;
+
+    case Constants.SAMPLE_UPDATE_THUMB:
+      updateThumb(action.id);
       SampleStore.emitChange();
       break;
 
