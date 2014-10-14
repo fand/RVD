@@ -9,15 +9,23 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var ConfigList = React.createClass({
   getInitialState: function () {
-    return { index: 0 };
+    return { x: 0, y: 0 };
   },
   _moveRight: function () {
-    if (this.state.index >= this.props.samples.length - 1) { return; }
-    this.setState({ index: this.state.index + 1 });
+    if (this.state.x >= this.props.samples.length - 1) { return; }
+    this.setState({ x: this.state.x + 1 });
   },
   _moveLeft: function () {
-    if (this.state.index == 0) { return; }
-    this.setState({ index: this.state.index - 1 });
+    if (this.state.x === 0) { return; }
+    this.setState({ x: this.state.x - 1 });
+  },
+  _moveUp: function () {
+    if (this.state.y === 0) { return; }
+    this.setState({ y: 0 });
+  },
+  _moveDown: function () {
+    if (this.state.y === 1) { return; }
+    this.setState({ y: 1 });
   },
   componentDidMount: function () {
     var self = this;
@@ -27,12 +35,21 @@ var ConfigList = React.createClass({
     KeyActions.bind('shift+left', function (e) {
       self._moveLeft();
     });
+    KeyActions.bind('shift+up', function (e) {
+      self._moveUp();
+    });
+    KeyActions.bind('shift+down', function (e) {
+      self._moveDown();
+    });
   },
   render: function () {
     var self = this;
     var configs = this.props.samples.map(function (sample, i) {
-      var cls = ((self.state.index === i) ? 'config-active' :
-                 (self.state.index < i) ? 'config-right' : 'config-left');
+      // Tell current position to Config.
+      var cls = ((self.state.x === i) ? 'config-active' :
+                 (self.state.x < i) ? 'config-right' : 'config-left');
+      cls += ' ' + ((self.state.y == 0) ? 'config-pattern' : 'config-time');
+
       return (<Config className={cls} sample={sample} key={sample.id}/>);
     });
     return (

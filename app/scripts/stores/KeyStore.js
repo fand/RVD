@@ -11,8 +11,20 @@ var Mousetrap = require('mousetrap');
 
 var _keybinds = {};
 
+var initKey = function (key) {
+  _keybinds[key] = [];
+  Mousetrap.bind(key, function (e) {
+    _keybinds[key].forEach(function (l) {
+      l(e);
+    });
+  });
+};
+
 var bind = function (key, listener) {
-  Mousetrap.bind(key, listener);
+  if (!_keybinds[key]) {
+    initKey(key);
+  }
+  _keybinds[key].push(listener);
 };
 var unbind = function (key) {
   Mousetrap.unbind(key);

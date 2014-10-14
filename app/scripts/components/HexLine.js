@@ -152,9 +152,9 @@ var HexLine = React.createClass({
 
     var suffix = (this.state.isFocused) ? ' focused' : '';
     return (
-      <span className={"hexline" + suffix} onClick={this.onClick} onBlur={this.onBlur}>
+      <div className={"hexline" + suffix} onClick={this.onClick} onBlur={this.onBlur}>
         {display}
-      </span>
+      </div>
     );
 
   }
