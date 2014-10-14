@@ -33,6 +33,26 @@ var SampleActions = {
       id: id,
       file: file
     });
+  },
+  setDOM: function (id, dom) {
+    AppDispatcher.handleViewAction({
+      actionType: Constants.SAMPLE_SET_DOM,
+      id: id,
+      dom: dom
+    });
+  },
+  setTime: function (id, time) {
+    AppDispatcher.handleViewAction({
+      actionType: Constants.SAMPLE_SET_TIME,
+      id: id,
+      time: time
+    });
+  },
+  updateThumb: function (id) {
+    AppDispatcher.handleViewAction({
+      actionType: Constants.SAMPLE_UPDATE_THUMB,
+      id: id
+    });
   }
 };
 

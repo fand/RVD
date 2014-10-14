@@ -3,7 +3,10 @@
 
 var React = require('react');
 var PlayerStore = require('../stores/PlayerStore');
+var SampleStore = require('../stores/SampleStore');
 var Constants = require('../Constants');
+var SampleActions = require('../actions/SampleActions');
+
 
 var Video = React.createClass({
   getInitialState: function () {
@@ -30,26 +33,34 @@ var Video = React.createClass({
       this.pause();
     }
   },
-  setTime: function (time) {
+  _init: function () {
+    var dom = this.refs.dom.getDOMNode();
+    dom.removeEventListener('loadeddata', this._init);
+    PlayerStore.addListener(Constants.PLAYER_PLAY, this.play);
+    PlayerStore.addListener(Constants.PLAYER_STOP, this.stop);
+    PlayerStore.addListener(Constants.PLAYER_SYNC, this.sync);
+    SampleStore.addListener(Constants.SAMPLE_SET_SAMPLE, this._update);
+    SampleActions.setDOM(this.props.sample.id, dom);
+  },
+  _updateThumb: function () {
+    var dom = this.refs.dom.getDOMNode();
+    dom.removeEventListener('loadeddata', this._updateThumb);
+    SampleActions.setDOM(this.props.sample.id, this.refs.dom.getDOMNode());
+  },
+  _update: function () {
     var dom = this.refs.dom.getDOMNode();
     if (dom.duration) {
-      this.refs.dom.getDOMNode().currentTime = time;
-      this.props.sample.getThumb(this.refs.dom.getDOMNode());  // get thumbnail of video for config
+      this._updateThumb();
+    } else {
+      dom.addEventListener('loadeddata', this._updateThumb);
     }
   },
   componentDidMount: function () {
-    var self = this;
     var dom = this.refs.dom.getDOMNode();
-    if (! dom.duration) {
-      var onload = function () {
-        self.setTime(0);
-        dom.removeEventListener('loadeddata', onload);
-
-        PlayerStore.addListener(Constants.PLAYER_PLAY, self.play);
-        PlayerStore.addListener(Constants.PLAYER_STOP, self.stop);
-        PlayerStore.addListener(Constants.PLAYER_SYNC, self.sync);
-      };
-      dom.addEventListener('loadeddata', onload);
+    if (dom.duration) {
+      this._init();
+    } else {
+      dom.addEventListener('loadeddata', this._init);
     }
   },
   render: function () {

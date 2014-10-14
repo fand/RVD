@@ -1,19 +1,16 @@
 'use strict';
 
-var Thumb = require('../Thumb');
+var Thumb = require('../util/Thumb');
 
 var count = 0;
 var Sample = function (file) {
   this.id = count++;
   this.setSample(file);
 
-  this.time = 20.3;
+  this.time = 0;
   this.string = 'F4D6A6DC';
   this.pattern = [];
   this.setPattern(this.string);
-};
-Sample.prototype.getThumb = function (dom) {
-  this.thumbUrl = Thumb(dom);
 };
 Sample.isValid = function (file) {
   return (file && file.type && file.type.match(/video|audio/i));
@@ -66,7 +63,24 @@ Sample.prototype.setSample = function (file) {
   this.type = file.type;
   this.name = file.name;
   this.url = URL.createObjectURL(this.file);
+  if (this.dom) {
+    this.dom.src = this.url;
+  }
 };
 
+Sample.prototype.setTime = function (time) {
+  this.time = time;
+  this.updateThumb();
+};
+
+Sample.prototype.setDOM = function (dom) {
+  this.dom = dom;
+  this.updateThumb();
+};
+
+Sample.prototype.updateThumb = function () {
+  if (!this.dom) { return; }
+  this.thumbUrl = Thumb(this.dom);
+};
 
 module.exports = Sample;

@@ -9,6 +9,7 @@ var SampleStore = require('../stores/SampleStore');
 var ModeStore = require('../stores/ModeStore');
 var KeyStore = require('../stores/KeyStore');
 var KeyActions = require('../actions/KeyActions');
+var Constants = require('../Constants.js');
 
 var PlayerMixin = require('../mixins/PlayerMixin');
 var ModeMixin = require('../mixins/ModeMixin');
@@ -31,11 +32,11 @@ var RVDApp = React.createClass({
     return getState();
   },
   componentDidMount: function () {
-    SampleStore.addListener(this.onSamplesUpdate);
+    SampleStore.addListener(Constants.SAMPLE_CHANGE, this.onSamplesUpdate);
     ModeStore.addListener(this.onModeUpdate);
   },
   componentWillUnmount: function () {
-    SampleStore.removeListener(this.onSamplesUpdate);
+    SampleStore.removeListener(Constants.SAMPLE_CHANGE, this.onSamplesUpdate);
     ModeStore.removeListener(this.onModeUpdate);
   },
   onSamplesUpdate: function () {
