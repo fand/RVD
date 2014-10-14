@@ -33,7 +33,7 @@ body {
 }
 
 .dropper {
-  @extend .fullscreen;
+
   z-index: 10;
   &.hide {
     display: none;
@@ -50,9 +50,11 @@ body {
       background: rgba(200, 100, 150, 0.3);
     }
   }
-
 }
 
+.sample-manager .dropper {
+  @extend .fullscreen;
+}
 
 video {
   @extend .fullscreen;
@@ -62,8 +64,7 @@ video {
 }
 
 .configList {
-  //@extend .fullscreen;
-
+  @extend .fullscreen;
   &.play-mode {
     top: -9999px;
     z-index: -1;
@@ -72,7 +73,6 @@ video {
       display: none;
     }
   }
-
   &.config-mode {
     top: 0px;
     z-index: 20;
@@ -80,13 +80,35 @@ video {
 }
 
 .config {
-  @extend .fullscreen;
+  @extend .wrapscreen;
+  position: absolute;
+  top: 0px;
   background: rgba(0, 0, 0, 0.2);
 
   img {
-    @extend .fullscreen;
-    opacity: 0.7;
+    @extend .wrapscreen;
+    position: absolute;
+    top: 0; left: 0;
+    opacity: 0.5;
   }
+
+  .dropper {
+    @extend .wrapscreen;
+    position: absolute;
+    top: 0; left: 0;
+  }
+
+  overflow: hidden;
+  transition: left .1s linear 0, top .1s linear 0;
+}
+.config-active {
+  left: 0;
+}
+.config-right {
+  left: 100%;
+}
+.config-left {
+  left: -100%;
 }
 
 .hexline, .hexline * {

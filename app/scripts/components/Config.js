@@ -26,8 +26,9 @@ var Config =  React.createClass({
     SampleActions.setSample(this.props.sample.id, newFiles[0]);
   },
   render: function () {
+    var cls = 'config ' + this.props.className;
     return (
-      <div className="config">
+      <div className={cls}>
         <Dropper onDrop={this.onDrop}>
           <img src={this.props.sample.thumbUrl} />
           <HexLine onChange={this.onPatternChange} sample={this.props.sample} />
