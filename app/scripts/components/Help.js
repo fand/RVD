@@ -33,6 +33,9 @@ var Help = React.createClass({
       self._toggle();
     })
   },
+  onClick: function () {
+    this._toggle();
+  },
   render: function () {
     var lists = keys.map(function (k) {
       return (
@@ -48,7 +51,7 @@ var Help = React.createClass({
       visible: this.state.visible
     });
     return (
-      <div className={cls}>
+      <div className={cls} onClick={this.onClick}>
         <h1>HELP</h1>
         <ul>{lists}</ul>
       </div>

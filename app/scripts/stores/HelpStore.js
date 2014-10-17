@@ -24,7 +24,7 @@ var HelpStore = merge(EventEmitter.prototype, {
 
     switch (action.actionType) {
     case Constants.HELP_TOGGLE:
-      this.emitChange();
+      HelpStore.emitChange();
       break;
     }
   })

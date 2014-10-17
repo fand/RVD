@@ -7,7 +7,7 @@ var HelpActions = require('../actions/HelpActions');
 
 var Header = React.createClass({
   onClickHelp: function () {
-    HelpActions.toggleHelp();
+    HelpActions.toggle();
   },
   render: function () {
     return (
