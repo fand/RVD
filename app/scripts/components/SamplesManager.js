@@ -14,8 +14,7 @@ var SamplesManager = React.createClass({
     return (
       // Element to Drop files on
       <div className="sample-manager">
-        <Dropper samples={this.props.samples} onDrop={this.addSamples}
-          hide={this.props.mode === 'config'} />
+        <Dropper samples={this.props.samples} onDrop={this.addSamples} />
       </div>
     );
   }

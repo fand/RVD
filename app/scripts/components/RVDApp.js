@@ -2,12 +2,15 @@
 'use strict';
 
 var React = require('react');
+var Dropper = require('./Dropper');
+var Header = require('./Header');
 var SamplesManager = require('./SamplesManager');
 var VideoList = require('./VideoList');
 var ConfigList = require('./ConfigList');
 var SampleStore = require('../stores/SampleStore');
 var KeyStore = require('../stores/KeyStore');
 var KeyActions = require('../actions/KeyActions');
+var SampleActions = require('../actions/SampleActions');
 var Constants = require('../Constants.js');
 
 var PlayerMixin = require('../mixins/PlayerMixin');
@@ -37,13 +40,17 @@ var RVDApp = React.createClass({
   onSamplesUpdate: function () {
     this.setState({ samples: SampleStore.getSamples() });
   },
+  onDrop: function (files) {
+    SampleActions.createMultiple(files);
+  },
   render: function() {
     return (
       <div>
-        <h1>RVD</h1>
-        <SamplesManager samples={this.state.samples} />
-        <VideoList samples={this.state.samples} />
-        <ConfigList samples={this.state.samples} />
+        <Dropper onDrop={this.onDrop}>
+          <Header />
+          <VideoList samples={this.state.samples} />
+          <ConfigList samples={this.state.samples} />
+        </Dropper>
       </div>
     );
   }
