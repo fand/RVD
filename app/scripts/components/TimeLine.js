@@ -51,8 +51,10 @@ var TimeLine = React.createClass({
     }
   },
   onKeyPressed: function (key) {
-    var str = this.props.sample.time_string + '';
     var pos = this.state.x;
+    if (pos === 2 || pos === 5) { return; }    // str[2], [5] are separator. They can't be changed.
+
+    var str = this.props.sample.time_string + '';
     var newTime = (str.substring(0, pos) + key + str.substring(pos + 1));
     this.onChange(newTime);
     this._moveRight();
@@ -61,7 +63,7 @@ var TimeLine = React.createClass({
     this.props.onChange(str);
   },
   renderLine: function () {
-    var str = this.props.sample.time + '　';
+    var str = this.props.sample.time_string + '　';
     return (
       <span className="fake-display">
         <span className="line">

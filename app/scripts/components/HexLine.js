@@ -135,7 +135,7 @@ var HexLine = React.createClass({
     } else {
       display = this.renderTwoLine();
     }
-    console.log(this.props);
+
     var suffix = (this.props.isFocused) ? ' focused' : '';
     return (
       <div className={"hexline" + suffix}>
