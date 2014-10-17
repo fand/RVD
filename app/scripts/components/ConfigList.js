@@ -4,12 +4,12 @@
 var React = require('react/addons');
 var Config = require('./Config');
 var KeyActions = require('../actions/KeyActions');
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+var ModeStore = require('../stores/ModeStore');
 
 
 var ConfigList = React.createClass({
   getInitialState: function () {
-    return { x: 0, y: 0 };
+    return { x: 0, y: 0, visible: false };
   },
   _moveRight: function () {
     if (this.state.x >= this.props.samples.length - 1) { return; }
@@ -41,6 +41,11 @@ var ConfigList = React.createClass({
     KeyActions.bind('shift+down', function (e) {
       self._moveDown();
     });
+    ModeStore.addListener(function () {
+      self.setState({
+        visible: ModeStore.getMode() === 'config'
+      });
+    });
   },
   render: function () {
     var self = this;
@@ -48,9 +53,12 @@ var ConfigList = React.createClass({
       // Tell current position to Config.
       var cls = ((self.state.x === i) ? 'config-active' :
                  (self.state.x < i) ? 'config-right' : 'config-left');
-      cls += ' ' + ((self.state.y == 0) ? 'config-pattern' : 'config-time');
+      cls += ' ' + ((self.state.y === 0) ? 'config-pattern' : 'config-time');
+      var focus = ((!self.state.visible) ? '' :
+                   (self.state.x !== i) ? '' :
+                   (self.state.y === 0) ? 'pattern' : 'time');
 
-      return (<Config className={cls} sample={sample} key={sample.id}/>);
+      return (<Config className={cls} sample={sample} key={sample.id} focus={focus} />);
     });
     return (
       <div className={'configList ' + this.props.mode + '-mode'}>

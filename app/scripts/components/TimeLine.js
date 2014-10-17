@@ -9,12 +9,11 @@ var numkeys = ('0123456789').split('');
 var TimeLine = React.createClass({
   getInitialState: function () {
     return {
-      isFocused: false,
-      x: 0,
+      x: 0
     };
   },
   ifFocusedThen: function (e, cb) {
-    if (! this.state.isFocused) { return; }
+    if (! this.props.isFocused) { return; }
     e.preventDefault();
     e.stopPropagation();
     cb();
@@ -23,8 +22,7 @@ var TimeLine = React.createClass({
     var self = this;
     numkeys.forEach(function (key) {
       KeyActions.bind(key, function (e) {
-        console.log(self.state);
-        if (! self.state.isFocused) { return; }
+        if (! self.props.isFocused) { return; }
         self.onKeyPressed(key);
       });
     });
@@ -35,7 +33,7 @@ var TimeLine = React.createClass({
       self.ifFocusedThen(e, self._moveRight);
     });
     KeyActions.bind(['del', 'backspace'], function (e) {
-      if (! self.state.isFocused) { return; }
+      if (! self.props.isFocused) { return; }
       self.onKeyPressed('0');
     });
     KeyActions.bind(['enter'], function (e) {
@@ -53,16 +51,11 @@ var TimeLine = React.createClass({
     }
   },
   onKeyPressed: function (key) {
-    var str = this.props.sample.time + '';
+    var str = this.props.sample.time_string + '';
     var pos = this.state.x;
-    var newTime = (str.substring(0, pos) + key + str.substring(pos + 1)).toUpperCase();
+    var newTime = (str.substring(0, pos) + key + str.substring(pos + 1));
     this.onChange(newTime);
     this._moveRight();
-  },
-  onClick: function () {
-    this.setState({
-      isFocused: true
-    });
   },
   onChange: function (str) {
     this.props.onChange(str);
@@ -81,9 +74,9 @@ var TimeLine = React.createClass({
   },
   render: function () {
     var display = this.renderLine();
-    var suffix = (this.state.isFocused) ? ' focused' : '';
+    var suffix = (this.props.isFocused) ? ' focused' : '';
     return (
-      <div className={"timeline" + suffix} onClick={this.onClick}>
+      <div className={"timeline" + suffix}>
         {display}
       </div>
     );

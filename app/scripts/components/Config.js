@@ -7,27 +7,12 @@ var HexLine = require('./HexLine');
 var TimeLine = require('./TimeLine');
 var SampleActions = require('../actions/SampleActions');
 
-var getState = function (sample) {
-  return {
-    pattern: sample.string,
-    time: sample.time
-  };
-};
 
 var Config =  React.createClass({
-  getInitialState: function () {
-    return getState(this.props.sample);
-  },
   onPatternChange: function (newPattern) {
-    this.setState({
-      pattern: newPattern
-    });
     SampleActions.setPattern(this.props.sample.id, newPattern);
   },
-  onTimeChange: function (newTime) {console.log('ontimechange');
-    this.setState({
-      time: newTime
-    });
+  onTimeChange: function (newTime) {
     SampleActions.setTime(this.props.sample.id, newTime);
   },
   onDrop: function (newFiles) {
@@ -40,8 +25,10 @@ var Config =  React.createClass({
         <Dropper onDrop={this.onDrop}>
           <img src={this.props.sample.thumbUrl} />
           <div className="config-content">
-            <HexLine onChange={this.onPatternChange} sample={this.props.sample} />
-            <TimeLine onChange={this.onTimeChange} sample={this.props.sample} />
+            <HexLine onChange={this.onPatternChange} sample={this.props.sample}
+              isFocused={this.props.focus === 'pattern'} />
+            <TimeLine onChange={this.onTimeChange} sample={this.props.sample}
+              isFocused={this.props.focus === 'time'} />
           </div>
         </Dropper>
       </ div>
