@@ -7,10 +7,12 @@ var Sample = function (file) {
   this.id = count++;
   this.setSample(file);
 
+  this.time_string = '00:00.00';
+  this.pattern_string = 'F4D6A6DC';
   this.time = 0;
-  this.string = 'F4D6A6DC';
   this.pattern = [];
-  this.setPattern(this.string);
+  this.setPattern(this.pattern_string);
+  this.setTime(this.time_string);
 };
 Sample.isValid = function (file) {
   return (file && file.type && file.type.match(/video|audio/i));
@@ -54,7 +56,7 @@ Sample.prototype.setPattern = function (string) {
       p_tail.push(false);
     }
   }
-  this.string = string + s_tail.join('');
+  this.pattern_string = string + s_tail.join('');
   this.pattern = pattern.concat(p_tail);
 };
 
@@ -68,8 +70,17 @@ Sample.prototype.setSample = function (file) {
   }
 };
 
-Sample.prototype.setTime = function (time) {
-  this.time = time;
+Sample.prototype.setTime = function (time_string) {
+  if (time_string === this.time_string) { return; }
+
+
+  // Convert string to sec.
+  var times = time_string.split(/:|\./g);
+  var newTime = (+times[0]) * 60 + (+times[1]) + (+times[2]) * 0.01;
+
+  if (this.dom.duration < newTime) { return; }
+  this.time = newTime;
+  this.time_string = time_string;
   this.updateThumb();
 };
 

@@ -84,6 +84,9 @@ video {
   position: absolute;
   top: 0px;
   background: rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: left .1s linear 0, top .1s linear 0;
+
 
   img {
     @extend .wrapscreen;
@@ -98,8 +101,11 @@ video {
     top: 0; left: 0;
   }
 
-  overflow: hidden;
-  transition: left .1s linear 0, top .1s linear 0;
+  .config-content {
+    position: absolute;
+    width: 100%;
+    height: 200%;
+  }
 }
 .config-active {
   left: 0;
@@ -110,16 +116,41 @@ video {
 .config-left {
   left: -100%;
 }
+.config-pattern .config-content {
+  top: 0;
+}
+.config-time .config-content {
+  top: -100%;
+}
 
-.hexline, .hexline * {
+.hexline {
+  @extend .fake;
+  top: 0;
+
+  &.focused .fake-invert {
+    background: #0DF;
+  }
+}
+
+.timeline {
+  @extend .fake;
+  top: 50%;
+
+  span {
+    font-size: 144px;
+  }
+  &.focused .fake-invert {
+    background: #F93;
+  }
+}
+
+.fake {
   position: absolute;
   z-index: 30;
-  top: -10px;
-  left: -10px;
-  width: 100%;
-  height: 100%;
+  left: 0;
+  width: 100%; height: 50%;
 
-  .hexline-display {
+  .fake-display {
     font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
     font-style: italic;
     color: #eee;
@@ -130,8 +161,10 @@ video {
     .line {
       display: block;
       position: relative;
+      top:0;
       min-width: 120%;
       height: 288px;
+
       span {
         font-size: 216px;
         position: relative;
@@ -140,8 +173,7 @@ video {
     }
   }
 
-  &.focused .hexline-invert {
-    background: #0DF;
+  &.focused .fake-invert {
     color: #222;
   }
 }
