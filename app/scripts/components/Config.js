@@ -24,7 +24,7 @@ var Config =  React.createClass({
     });
     SampleActions.setPattern(this.props.sample.id, newPattern);
   },
-  onTimeChange: function (newTime) {
+  onTimeChange: function (newTime) {console.log('ontimechange');
     this.setState({
       time: newTime
     });

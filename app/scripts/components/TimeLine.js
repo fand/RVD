@@ -23,6 +23,7 @@ var TimeLine = React.createClass({
     var self = this;
     numkeys.forEach(function (key) {
       KeyActions.bind(key, function (e) {
+        console.log(self.state);
         if (! self.state.isFocused) { return; }
         self.onKeyPressed(key);
       });
@@ -52,11 +53,10 @@ var TimeLine = React.createClass({
     }
   },
   onKeyPressed: function (key) {
-    var str = this.props.sample.time;
+    var str = this.props.sample.time + '';
     var pos = this.state.x;
     var newTime = (str.substring(0, pos) + key + str.substring(pos + 1)).toUpperCase();
-
-    this.props.onChange(newTime);
+    this.onChange(newTime);
     this._moveRight();
   },
   onClick: function () {
@@ -68,12 +68,14 @@ var TimeLine = React.createClass({
     this.props.onChange(str);
   },
   renderLine: function () {
-    var str = this.props.sample.string + '　';
+    var str = this.props.sample.time + '　';
     return (
-      <span className="timeline-display">
-        <span>{'0x' + str.substring(0, this.state.x)}</span>
-        <span className="timeline-invert">{str[this.state.x]}</span>
-        <span>{str.substring(this.state.x + 1)}</span>
+      <span className="fake-display">
+        <span className="line">
+          <span>{str.substring(0, this.state.x)}</span>
+          <span className="fake-invert">{str[this.state.x]}</span>
+          <span>{str.substring(this.state.x + 1)}</span>
+        </span>
       </span>
     );
   },

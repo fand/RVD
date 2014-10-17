@@ -103,10 +103,10 @@ var HexLine = React.createClass({
   renderOneLine: function () {
     var str = this.props.sample.string + '　';
     return (
-      <span className="hexline-display">
+      <span className="fake-display">
         <span className="line">
           <span>{'0x' + str.substring(0, this.state.x)}</span>
-          <span className="hexline-invert">{str[this.state.x]}</span>
+          <span className="fake-invert">{str[this.state.x]}</span>
           <span>{str.substring(this.state.x + 1)}</span>
         </span>
       </span>
@@ -116,10 +116,10 @@ var HexLine = React.createClass({
     var str = this.props.sample.string;
     if (this.state.y === 0) {
       return (
-        <span className="hexline-display">
+        <span className="fake-display">
           <span className="line">
             <span>{'0x' + str.substring(0, this.state.x)}</span>
-            <span className="hexline-invert">{str[this.state.x]}</span>
+            <span className="fake-invert">{str[this.state.x]}</span>
             <span>{str.substring(this.state.x + 1, 8)}</span>
           </span>
           <span className="line">
@@ -129,13 +129,13 @@ var HexLine = React.createClass({
       );
     } else {
       return (
-        <span className="hexline-display">
+        <span className="fake-display">
           <span className="line">
             <span>{'0x' + str.substring(0, 8)}</span>
           </span>
           <span className="line">
             <span>{'0x' + str.substring(8, 8 + this.state.x)}</span>
-            <span className="hexline-invert">{str[8 + this.state.x]}</span>
+            <span className="fake-invert">{str[8 + this.state.x]}</span>
             <span>{str.substring(this.state.x + 9)}</span>
           </span>
         </span>
