@@ -4,28 +4,37 @@
 var React = require('react/addons');
 var Config = require('./Config');
 var KeyActions = require('../actions/KeyActions');
-var ModeStore = require('../stores/ModeStore');
-
 
 var ConfigList = React.createClass({
   getInitialState: function () {
-    return { x: 0, y: 0, visible: false };
+    return {
+      x: 0,
+      y: 0,
+      visible: false
+    };
   },
   _moveRight: function () {
+    if (!this.state.visible) { return; }
     if (this.state.x >= this.props.samples.length - 1) { return; }
     this.setState({ x: this.state.x + 1 });
   },
   _moveLeft: function () {
+    if (!this.state.visible) { return; }
     if (this.state.x === 0) { return; }
     this.setState({ x: this.state.x - 1 });
   },
   _moveUp: function () {
+    if (!this.state.visible) { return; }
     if (this.state.y === 0) { return; }
     this.setState({ y: 0 });
   },
   _moveDown: function () {
+    if (!this.state.visible) { return; }
     if (this.state.y === 1) { return; }
     this.setState({ y: 1 });
+  },
+  _toggle: function () {
+    this.setState({ visible: !this.state.visible });
   },
   componentDidMount: function () {
     var self = this;
@@ -41,10 +50,8 @@ var ConfigList = React.createClass({
     KeyActions.bind('shift+down', function (e) {
       self._moveDown();
     });
-    ModeStore.addListener(function () {
-      self.setState({
-        visible: ModeStore.getMode() === 'config'
-      });
+    KeyActions.bind('esc', function (e) {
+      self._toggle();
     });
   },
   render: function () {
@@ -60,8 +67,12 @@ var ConfigList = React.createClass({
 
       return (<Config className={cls} sample={sample} key={sample.id} focus={focus} />);
     });
+
+    var cls = 'configList ';
+    cls += (this.state.visible) ? 'visible' : 'invisible';
+
     return (
-      <div className={'configList ' + this.props.mode + '-mode'}>
+      <div className={cls}>
         {configs}
       </div>
     );

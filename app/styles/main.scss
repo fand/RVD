@@ -65,7 +65,7 @@ video {
 
 .configList {
   @extend .fullscreen;
-  &.play-mode {
+  &.invisible {
     top: -9999px;
     z-index: -1;
 
@@ -73,7 +73,7 @@ video {
       display: none;
     }
   }
-  &.config-mode {
+  &.visible {
     top: 0px;
     z-index: 20;
   }

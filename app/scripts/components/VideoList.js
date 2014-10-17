@@ -4,18 +4,11 @@
 var React = require('react');
 var Video = require('./Video');
 
-var Mode = require('../Mode');
 
 
 var VideoList = React.createClass({
   getInitialState: function () {
     return { paused: true };
-  },
-  componentDidMount: function () {
-    var self = this;
-    // Mode.addKeybind('play', 'space', function () {
-    //   this.toggle();
-    // }.bind(this));
   },
   play: function () {
     this.props.samples.forEach(function (sample, i) {
