@@ -77,8 +77,9 @@ var TimeLine = React.createClass({
   render: function () {
     var display = this.renderLine();
     var suffix = (this.props.isFocused) ? ' focused' : '';
+    var style = { fontSize: (window.innerWidth / 8.0 * 1.54) };
     return (
-      <div className={"timeline" + suffix}>
+      <div className={"timeline" + suffix} style={style}>
         {display}
       </div>
     );
