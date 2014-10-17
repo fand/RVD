@@ -9,8 +9,7 @@ var hexkeys = ('0123456789abcdefABCDEF').split('');
 var HexLine = React.createClass({
   getInitialState: function () {
     return {
-      x: 0,
-      y: 0
+      x: 0, y: 0
     };
   },
   ifFocusedThen: function (e, cb) {
@@ -136,9 +135,10 @@ var HexLine = React.createClass({
       display = this.renderTwoLine();
     }
 
+    var style = { fontSize: (window.innerWidth / 10.0 * 1.6) };
     var suffix = (this.props.isFocused) ? ' focused' : '';
     return (
-      <div className={"hexline" + suffix}>
+      <div className={"hexline" + suffix} style={style}>
         {display}
       </div>
     );
