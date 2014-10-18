@@ -8,7 +8,9 @@ var PlayerActions = require('../actions/PlayerActions');
 var Constants = require('../Constants');
 var CHANGE_EVENT = 'CHANGE_PLAYERSTORE';
 
-// timerによるイベント発火まではしない
+var MutekiTimer = require('../util/MutekiTimer');
+var T = new MutekiTimer();
+
 
 // Private Data
 var _bpm = 120;
@@ -22,17 +24,16 @@ function play() {
   sync();
 }
 function pause() {
-  window.clearTimeout(_timer);
+  T.clearTimeout(_timer);
 }
 function stop() {
-  //VideoActions.stop();
-  window.clearTimeout(_timer);
+  T.clearTimeout(_timer);
   _pos = 0;
 }
 
 function sync() {
   PlayerActions.sync(_pos++);
-  _timer = window.setTimeout(function () {
+  _timer = T.setTimeout(function () {
     sync();
   }, _duration);
   console.log(_duration);
