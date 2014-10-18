@@ -37,9 +37,9 @@ var Help = React.createClass({
     this._toggle();
   },
   render: function () {
-    var lists = keys.map(function (k) {
+    var lists = keys.map(function (k, i) {
       return (
-        <li>
+        <li key={i}>
           <span className="help-key">{k.key}</span>
           <span className="help-description">{k.description}</span>
         </li>

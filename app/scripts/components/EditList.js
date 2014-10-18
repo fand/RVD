@@ -2,6 +2,7 @@
 'use strict';
 
 var React = require('react/addons');
+var cs = React.addons.classSet;
 var Edit = require('./Edit');
 var KeyActions = require('../actions/KeyActions');
 
@@ -37,22 +38,11 @@ var EditList = React.createClass({
     this.setState({ visible: !this.state.visible });
   },
   componentDidMount: function () {
-    var self = this;
-    KeyActions.bind('shift+right', function (e) {
-      self._moveRight();
-    });
-    KeyActions.bind('shift+left', function (e) {
-      self._moveLeft();
-    });
-    KeyActions.bind('shift+up', function (e) {
-      self._moveUp();
-    });
-    KeyActions.bind('shift+down', function (e) {
-      self._moveDown();
-    });
-    KeyActions.bind('esc', function (e) {
-      self._toggle();
-    });
+    KeyActions.bind('shift+right', this._moveRight);
+    KeyActions.bind('shift+left', this._moveLeft);
+    KeyActions.bind('shift+up', this._moveUp);
+    KeyActions.bind('shift+down', this._moveDown);
+    KeyActions.bind('esc', this._toggle);
   },
   render: function () {
     var self = this;
@@ -64,12 +54,13 @@ var EditList = React.createClass({
       var focus = ((!self.state.visible) ? '' :
                    (self.state.x !== i) ? '' :
                    (self.state.y === 0) ? 'pattern' : 'time');
-
       return (<Edit className={cls} sample={sample} key={sample.id} focus={focus} />);
     });
 
-    var cls = 'edit-list ';
-    cls += (this.state.visible) ? 'visible' : 'invisible';
+    var cls = cs({
+      'edit-list': true,
+      'visible': this.state.visible
+    });
 
     return (
       <div className={cls}>

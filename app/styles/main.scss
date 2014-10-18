@@ -68,10 +68,9 @@ video {
 
 .edit-list {
   @extend .fullscreen;
-  &.invisible {
-    top: -9999px;
-    z-index: -1;
-  }
+  top: -9999px;
+  z-index: -1;
+
   &.visible {
     top: 0px;
     z-index: 20;
