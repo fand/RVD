@@ -13,6 +13,8 @@ module.exports = keyMirror({
   PLAYER_PLAY: null,
   PLAYER_STOP: null,
   PLAYER_SYNC: null,
+  PLAYER_SPEED_UP: null,
+  PLAYER_SPEED_DOWN: null,
 
   KEY_BIND: null,
   KEY_UNBIND: null,

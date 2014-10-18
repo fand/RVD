@@ -22,6 +22,16 @@ var PlayerActions = {
       actionType: Constants.PLAYER_SYNC,
       time: time
     });
+  },
+  speedUp: function () {
+    AppDispatcher.handleViewAction({
+      actionType: Constants.PLAYER_SPEED_UP
+    });
+  },
+  speedDown: function () {
+    AppDispatcher.handleViewAction({
+      actionType: Constants.PLAYER_SPEED_DOWN
+    });
   }
 };
 
