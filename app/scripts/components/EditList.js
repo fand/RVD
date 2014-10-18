@@ -5,6 +5,9 @@ var React = require('react/addons');
 var cs = React.addons.classSet;
 var Edit = require('./Edit');
 var KeyActions = require('../actions/KeyActions');
+var SampleActions = require('../actions/SampleActions');
+var SampleStore = require('../stores/SampleStore');
+var Constants = require('../Constants');
 
 var EditList = React.createClass({
   getInitialState: function () {
@@ -37,12 +40,23 @@ var EditList = React.createClass({
   _toggle: function () {
     this.setState({ visible: !this.state.visible });
   },
+  _removeSample: function () {
+    var target = this.props.samples[this.state.x];
+    SampleActions.destroy(target.id);
+  },
+  _moveToValid: function () {
+    if (this.state.x >= this.props.samples.length) {
+      this.setState({ x: Math.min(this.state.x - 1, 0) });
+    }
+  },
   componentDidMount: function () {
     KeyActions.bind('shift+right', this._moveRight);
     KeyActions.bind('shift+left', this._moveLeft);
     KeyActions.bind('shift+up', this._moveUp);
     KeyActions.bind('shift+down', this._moveDown);
     KeyActions.bind('esc', this._toggle);
+    KeyActions.bind(['shift+del', 'shift+backspace'], this._removeSample);
+    SampleStore.addListener(Constants.SAMPLE_CHANGE, this._moveToValid);
   },
   render: function () {
     var self = this;

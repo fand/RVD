@@ -20,11 +20,18 @@ var initKey = function (key) {
   });
 };
 
-var bind = function (key, listener) {
+var _bind = function (key, listener) {
   if (!_keybinds[key]) {
     initKey(key);
   }
   _keybinds[key].push(listener);
+};
+var bind = function (_keys, listener) {
+  var keys = ((Array.isArray(_keys)) ? _keys : [_keys]);
+  console.log(keys);
+  keys.forEach(function (key) {
+    _bind(key, listener);
+  });
 };
 var unbind = function (key) {
   Mousetrap.unbind(key);

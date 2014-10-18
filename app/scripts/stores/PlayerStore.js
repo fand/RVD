@@ -53,9 +53,6 @@ var PlayerStore = merge(EventEmitter.prototype, {
   addListener: function (e, callback) {
     this.on(e, callback);
   },
-  removeListener: function (e, callback) {
-    this.removeListener(e, callback);
-  },
 
   // イベント受信時の動作を登録
   dispatcherIndex: AppDispatcher.register(function (payload) {

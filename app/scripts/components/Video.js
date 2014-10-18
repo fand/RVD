@@ -58,6 +58,12 @@ var Video = React.createClass({
       dom.addEventListener('loadeddata', this._init);
     }
   },
+  componentWillUnmount: function () {
+    PlayerStore.removeListener(Constants.PLAYER_PLAY, this.play);
+    PlayerStore.removeListener(Constants.PLAYER_PAUSE, this.pause);
+    PlayerStore.removeListener(Constants.PLAYER_SYNC, this.sync);
+    SampleStore.removeListener(Constants.SAMPLE_SET_SAMPLE, this._update);
+  },
   render: function () {
     return (
       <video preload

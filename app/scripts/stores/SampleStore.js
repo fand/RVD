@@ -68,9 +68,6 @@ var SampleStore = merge(EventEmitter.prototype, {
   addListener: function (e, callback) {
     this.on(e, callback);
   },
-  removeListener: function (e, callback) {
-    this.removeListener(e, callback);
-  },
 
   // イベント受信時の動作を登録
   dispatcherIndex: AppDispatcher.register(function (payload) {
@@ -82,7 +79,7 @@ var SampleStore = merge(EventEmitter.prototype, {
       SampleStore.emitChange();
       break;
 
-    case Constants.SAMPLE_DELETE:
+    case Constants.SAMPLE_DESTROY:
       destroy(action.id);
       SampleStore.emitChange();
       break;
