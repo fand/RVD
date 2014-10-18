@@ -7,69 +7,83 @@ var KeyActions = require('../actions/KeyActions');
 
 var hexkeys = ('0123456789abcdefABCDEF').split('');
 
+var cancelEvent = function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+};
+
 var PatternInput = React.createClass({
   getInitialState: function () {
     return {
       x: 0, y: 0
     };
   },
-  ifFocusedThen: function (e, cb) {
-    if (! this.props.isFocused) { return; }
-    e.preventDefault();
-    e.stopPropagation();
-    cb();
-  },
   componentDidMount: function () {
     var self = this;
+    this._onHex = {};
     hexkeys.forEach(function (key) {
-      KeyActions.bind(key, function (e) {
+      self._onHex[key] = function (e) {
         if (! self.props.isFocused) { return; }
-        self.onKeyPressed(key);
-      });
+        cancelEvent(e);
+        self.onKeyPressed(e, key);
+      };
+      KeyActions.bind(key, self._onHex[key]);
     });
-    KeyActions.bind('up', function (e) {
-      self.ifFocusedThen(e, self._moveUp);
-    });
-    KeyActions.bind('down', function (e) {
-      self.ifFocusedThen(e, self._moveDown);
-    });
-    KeyActions.bind('left', function (e) {
-      self.ifFocusedThen(e, self._moveLeft);
-    });
-    KeyActions.bind('right', function (e) {
-      self.ifFocusedThen(e, self._moveRight);
-    });
-    KeyActions.bind(['del', 'backspace'], function (e) {
-      var pos = self.state.y * 8 + self.state.x;
-      self.ifFocusedThen(e, function () {
-        var str = self.props.sample.pattern_string;
-        self.props.onChange(str.substring(0, pos) + str.substring(pos + 1));
-      })
-    });
+    KeyActions.bind('up', this._moveUp);
+    KeyActions.bind('down', this._moveDown);
+    KeyActions.bind('left', this._moveLeft);
+    KeyActions.bind('right', this._moveRight);
+    KeyActions.bind(['del', 'backspace'], this._inputZero);
   },
-  _moveRight: function () {
+  componentWillUnmount: function () {
+    var self = this;
+    hexkeys.forEach(function (key) {
+      KeyActions.unbind(key, self._onHex[key]);
+    });
+    KeyActions.unbind('up', this._moveUp);
+    KeyActions.unbind('down', this._moveDown);
+    KeyActions.unbind('left', this._moveLeft);
+    KeyActions.unbind('right', this._moveRight);
+    KeyActions.unbind(['del', 'backspace'], this._inputZero);
+  },
+  _inputZero: function (e) {
+    if (! this.props.isFocused) { return; }
+    cancelEvent(e);
+    var pos = self.state.y * 8 + self.state.x;
+    var str = self.props.sample.pattern_string;
+    self.props.onChange(str.substring(0, pos) + str.substring(pos + 1));
+  },
+  _moveRight: function (e) {
+    if (! this.props.isFocused) { return; }
+    cancelEvent(e);
     var lim = (this.props.sample.pattern_string.length <= 4) ? 3 : 7;
     var nbsp = (this.props.sample.pattern_string.length <= 8) ? 1 : 0;
     if (this.state.x < lim + nbsp) {
       this.setState({ x: this.state.x + 1 });
     }
   },
-  _moveLeft: function () {
+  _moveLeft: function (e) {
+    if (! this.props.isFocused) { return; }
+    cancelEvent(e);
     if (this.state.x > 0) {
       this.setState({ x: this.state.x - 1 });
     }
   },
-  _moveUp: function () {
+  _moveUp: function (e) {
+    if (! this.props.isFocused) { return; }
+    cancelEvent(e);
     if (this.state.y > 0) {
       this.setState({ y: this.state.y - 1 });
     }
   },
-  _moveDown: function () {
+  _moveDown: function (e) {
+    if (! this.props.isFocused) { return; }
+    cancelEvent(e);
     if (this.state.y < 1) {
       this.setState({ y: this.state.y + 1 });
     }
   },
-  onKeyPressed: function (key) {
+  onKeyPressed: function (e, key) {
     var str = this.props.sample.pattern_string;
     var pos = this.state.y * 8 + this.state.x;
     var newStr = (str.substring(0, pos) + key + str.substring(pos + 1)).toUpperCase();
@@ -80,7 +94,7 @@ var PatternInput = React.createClass({
         x: 0, y: 1
       });
     } else {
-      this._moveRight();
+      this._moveRight(e);
     }
   },
   onChange: function (str) {

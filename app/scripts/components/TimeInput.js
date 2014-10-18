@@ -6,58 +6,68 @@ var KeyActions = require('../actions/KeyActions');
 
 var numkeys = ('0123456789').split('');
 
+var cancelEvent = function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+};
+
 var TimeInput = React.createClass({
   getInitialState: function () {
     return {
       x: 0
     };
   },
-  ifFocusedThen: function (e, cb) {
-    if (! this.props.isFocused) { return; }
-    e.preventDefault();
-    e.stopPropagation();
-    cb();
-  },
   componentDidMount: function () {
     var self = this;
+    this._onNum = {};
     numkeys.forEach(function (key) {
-      KeyActions.bind(key, function (e) {
+      self._onNum[key] = function (e) {
         if (! self.props.isFocused) { return; }
-        self.onKeyPressed(key);
-      });
+        cancelEvent(e);
+        self.onKeyPressed(e, key);
+      };
+      KeyActions.bind(key, self._onNum[key]);
     });
-    KeyActions.bind('left', function (e) {
-      self.ifFocusedThen(e, self._moveLeft);
-    });
-    KeyActions.bind('right', function (e) {
-      self.ifFocusedThen(e, self._moveRight);
-    });
-    KeyActions.bind(['del', 'backspace'], function (e) {
-      if (! self.props.isFocused) { return; }
-      self.onKeyPressed('0');
-    });
-    KeyActions.bind(['enter'], function (e) {
-      self.setState({ isFocused: false });
-    });
+    KeyActions.bind('left', this._moveLeft);
+    KeyActions.bind('right', this._moveRight);
+    KeyActions.bind(['del', 'backspace'], this._inputZero);
   },
-  _moveRight: function () {
+  componentWillUnmount: function () {
+    var self = this;
+    numkeys.forEach(function (key) {
+      KeyActions.unbind(key, self._onNum[key]);
+    });
+    KeyActions.unbind('left', this._moveLeft);
+    KeyActions.unbind('right', this._moveRight);
+    KeyActions.unbind(['del', 'backspace'], this._inputZero);
+  },
+  _inputZero: function (e) {
+    if (! this.props.isFocused) { return; }
+    cancelEvent(e);
+    this.onKeyPressed(e, '0');
+  },
+  _moveRight: function (e) {
+    if (! this.props.isFocused) { return; }
+    cancelEvent(e);
     if (this.state.x < 15) {
       this.setState({ x: this.state.x + 1 });
     }
   },
-  _moveLeft: function () {
+  _moveLeft: function (e) {
+    if (! this.props.isFocused) { return; }
+    cancelEvent(e);
     if (this.state.x > 0) {
       this.setState({ x: this.state.x - 1 });
     }
   },
-  onKeyPressed: function (key) {
+  onKeyPressed: function (e, key) {
     var pos = this.state.x;
     if (pos === 2 || pos === 5) { return; }    // str[2], [5] are separator. They can't be changed.
 
     var str = this.props.sample.time_string + '';
     var newTime = (str.substring(0, pos) + key + str.substring(pos + 1));
     this.onChange(newTime);
-    this._moveRight();
+    this._moveRight(e);
   },
   onChange: function (str) {
     this.props.onChange(str);

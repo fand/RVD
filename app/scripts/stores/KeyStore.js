@@ -28,13 +28,23 @@ var _bind = function (key, listener) {
 };
 var bind = function (_keys, listener) {
   var keys = ((Array.isArray(_keys)) ? _keys : [_keys]);
-  console.log(keys);
   keys.forEach(function (key) {
     _bind(key, listener);
   });
 };
-var unbind = function (key) {
-  Mousetrap.unbind(key);
+var _unbind = function (key, listener) {
+  if (_keybinds[key]) {
+    var idx;
+    while ((idx = _keybinds[key].indexOf(listener)) != -1) {
+      _keybinds[key].splice(idx, 1);
+    }
+  }
+};
+var unbind = function (_keys, listener) {
+  var keys = ((Array.isArray(_keys)) ? _keys : [_keys]);
+  keys.forEach(function (key) {
+    _unbind(key, listener);
+  });
 };
 
 
@@ -60,7 +70,7 @@ var KeyStore = merge(EventEmitter.prototype, {
       break;
 
     case Constants.KEY_UNBIND:
-      unbind(action.key);
+      unbind(action.key, action.listener);
       KeyStore.emitChange();
       break;
     }

@@ -9,10 +9,11 @@ var KeyActions = {
       listener: listener
     });
   },
-  unbind: function (key) {
+  unbind: function (key, listener) {
     AppDispatcher.handleViewAction({
       actionType: Constants.KEY_UNBIND,
-      key: key
+      key: key,
+      listener: listener
     });
   }
 };
