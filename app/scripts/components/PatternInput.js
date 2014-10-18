@@ -1,7 +1,8 @@
 /** @jsx React.DOM */
 'use strict';
 
-var React = require('react');
+var React = require('react/addons');
+var cs = React.addons.classSet;
 var KeyActions = require('../actions/KeyActions');
 
 var hexkeys = ('0123456789abcdefABCDEF').split('');
@@ -85,64 +86,67 @@ var PatternInput = React.createClass({
   onChange: function (str) {
     this.props.onChange(str);
   },
+  _makeLine: function (str) {
+    return (
+      <span className="line">
+        <span>{'0x' + str.substring(0, this.state.x)}</span>
+        <span className="fake-invert">{str[this.state.x]}</span>
+        <span>{str.substring(this.state.x + 1)}</span>
+      </span>
+    );
+  },
   renderOneLine: function () {
     var str = this.props.sample.pattern_string + '　';
     return (
       <span className="fake-display">
-        <span className="line">
-          <span>{'0x' + str.substring(0, this.state.x)}</span>
-          <span className="fake-invert">{str[this.state.x]}</span>
-          <span>{str.substring(this.state.x + 1)}</span>
-        </span>
+        {this._makeLine(str)}
       </span>
     );
   },
   renderTwoLine: function () {
     var str = this.props.sample.pattern_string;
+    var str1 = str.substring(0, 8);
+    var str2 = str.substring(8);
+
+    var line1, line2;
     if (this.state.y === 0) {
-      return (
-        <span className="fake-display">
-          <span className="line">
-            <span>{'0x' + str.substring(0, this.state.x)}</span>
-            <span className="fake-invert">{str[this.state.x]}</span>
-            <span>{str.substring(this.state.x + 1, 8)}</span>
-          </span>
-          <span className="line">
-            <span>{'0x' + str.substring(8)}</span>
-          </span>
+      line1 = this._makeLine(str1);
+      line2 = (
+        <span className="line">
+          <span>{'0x' + str2}</span>
         </span>
       );
     } else {
-      return (
-        <span className="fake-display">
-          <span className="line">
-            <span>{'0x' + str.substring(0, 8)}</span>
-          </span>
-          <span className="line">
-            <span>{'0x' + str.substring(8, 8 + this.state.x)}</span>
-            <span className="fake-invert">{str[8 + this.state.x]}</span>
-            <span>{str.substring(this.state.x + 9)}</span>
-          </span>
+      line1 = (
+        <span className="line">
+          <span>{'0x' + str1}</span>
         </span>
-      )
-    }
-  },
-  render: function () {
-    var display;
-    if (this.props.sample.pattern_string.length <= 8) {
-      display = this.renderOneLine();
-    } else {
-      display = this.renderTwoLine();
+      );
+      line2 = this._makeLine(str2);
     }
 
-    var style = { fontSize: (window.innerWidth / 10.0 * 1.6) };
-    var suffix = (this.props.isFocused) ? ' focused' : '';
     return (
-      <div className={"pattern-input" + suffix} style={style}>
+      <span className="fake-display">
+        {line1}
+        {line2}
+      </span>
+    );
+  },
+  render: function () {
+    var display = ((this.props.sample.pattern_string.length <= 8) ?
+                   this.renderOneLine() : this.renderTwoLine());
+
+    // Adjust width of pattern '0xXXXXXXXX'
+    var style = { fontSize: (window.innerWidth / 10.0 * 1.6) };
+    var cls = cs({
+      'pattern-input': true,
+      'focused': this.props.isFocused
+    });
+    return (
+      <div className={cls} style={style}>
         {display}
       </div>
     );
-
   }
 });
 
