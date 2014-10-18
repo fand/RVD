@@ -84,7 +84,7 @@ video {
   top: 0px;
   background: $edit-bg;
   overflow: hidden;
-  transition: left .1s linear 0, top .1s linear 0;
+  transition: left .1s linear 0;
 
   img {
     @extend .wrapscreen;
@@ -100,6 +100,7 @@ video {
   }
 
   .edit-content {
+    transition: top .05s ease-in 0;
     position: absolute;
     width: 100%;
     height: 200%;
