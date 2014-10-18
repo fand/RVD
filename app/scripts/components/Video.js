@@ -59,7 +59,13 @@ var Video = React.createClass({
     }
   },
   render: function () {
-    return (<video preload src={this.props.sample.url} ref="dom" className={(this.state.paused)? 'paused': ''} />);
+    return (
+      <video preload
+        className={(this.state.paused)? 'paused': ''}
+        src={this.props.sample.url}
+        key={this.props.sample.id}
+        ref="dom" />
+    );
   }
 });
 

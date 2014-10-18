@@ -19,7 +19,7 @@ var _pos = 0;
 var _timer;
 
 
-// called from self
+// Play / Pause
 function play() {
   sync();
 }
@@ -27,15 +27,15 @@ function pause() {
   T.clearTimeout(_timer);
 }
 
+// Sync videos to read next pattern
 function sync() {
   PlayerActions.sync(_pos++);
   _timer = T.setTimeout(function () {
     sync();
   }, _duration);
-  console.log(_duration);
 }
 
-
+// BPM operation
 function speedUp() {
   _bpm++;
   _duration = (60 / 4) * 1000 / _bpm;
