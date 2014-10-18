@@ -4,9 +4,8 @@
 var React = require('react');
 var Dropper = require('./Dropper');
 var Header = require('./Header');
-var SamplesManager = require('./SamplesManager');
 var VideoList = require('./VideoList');
-var ConfigList = require('./ConfigList');
+var EditList = require('./EditList');
 var SampleStore = require('../stores/SampleStore');
 var KeyStore = require('../stores/KeyStore');
 var KeyActions = require('../actions/KeyActions');
@@ -49,7 +48,7 @@ var RVDApp = React.createClass({
         <Dropper onDrop={this.onDrop}>
           <Header />
           <VideoList samples={this.state.samples} />
-          <ConfigList samples={this.state.samples} />
+          <EditList samples={this.state.samples} />
         </Dropper>
       </div>
     );

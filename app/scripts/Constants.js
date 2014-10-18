@@ -11,7 +11,7 @@ module.exports = keyMirror({
   SAMPLE_SET_DOM: null,
 
   PLAYER_PLAY: null,
-  PLAYER_STOP: null,
+  PLAYER_PAUSE: null,
   PLAYER_SYNC: null,
   PLAYER_SPEED_UP: null,
   PLAYER_SPEED_DOWN: null,

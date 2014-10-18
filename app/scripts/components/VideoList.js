@@ -5,7 +5,6 @@ var React = require('react');
 var Video = require('./Video');
 
 
-
 var VideoList = React.createClass({
   getInitialState: function () {
     return { paused: true };
@@ -26,7 +25,7 @@ var VideoList = React.createClass({
   },
   render: function() {
     var renderVideo = function (sample, i) {
-      return (<Video sample={sample} ref={'sample' + i} />);
+      return (<Video sample={sample} key={sample.id} ref={'sample' + i} />);
     };
     return (<div className="sampleList">{this.props.samples.map(renderVideo)}</div>);
   }

@@ -21,11 +21,6 @@ var Video = React.createClass({
     this.refs.dom.getDOMNode().pause();
     this.setState({ paused: true });
   },
-  stop: function () {
-    this.refs.dom.getDOMNode().pause();
-    this.refs.dom.getDOMNode().currentTime = 0;
-    this.setState({ paused: true });
-  },
   sync: function (time) {
     if (this.props.sample.getNote(time)) {
       this.play();
@@ -37,7 +32,7 @@ var Video = React.createClass({
     var dom = this.refs.dom.getDOMNode();
     dom.removeEventListener('loadeddata', this._init);
     PlayerStore.addListener(Constants.PLAYER_PLAY, this.play);
-    PlayerStore.addListener(Constants.PLAYER_STOP, this.stop);
+    PlayerStore.addListener(Constants.PLAYER_PAUSE, this.pause);
     PlayerStore.addListener(Constants.PLAYER_SYNC, this.sync);
     SampleStore.addListener(Constants.SAMPLE_SET_SAMPLE, this._update);
     SampleActions.setDOM(this.props.sample.id, dom);

@@ -8,7 +8,7 @@ var TimeInput = require('./TimeInput');
 var SampleActions = require('../actions/SampleActions');
 
 
-var Config =  React.createClass({
+var Edit =  React.createClass({
   onPatternChange: function (newPattern) {
     SampleActions.setPattern(this.props.sample.id, newPattern);
   },
@@ -19,12 +19,12 @@ var Config =  React.createClass({
     SampleActions.setSample(this.props.sample.id, newFiles[0]);
   },
   render: function () {
-    var cls = 'config ' + this.props.className;
+    var cls = 'edit ' + this.props.className;
     return (
       <div className={cls}>
         <Dropper onDrop={this.onDrop}>
           <img src={this.props.sample.thumbUrl} />
-          <div className="config-content">
+          <div className="edit-content">
             <PatternInput onChange={this.onPatternChange} sample={this.props.sample}
               isFocused={this.props.focus === 'pattern'} />
             <TimeInput onChange={this.onTimeChange} sample={this.props.sample}
@@ -37,4 +37,4 @@ var Config =  React.createClass({
 });
 
 
-module.exports = Config;
+module.exports = Edit;

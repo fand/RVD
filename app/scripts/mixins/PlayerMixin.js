@@ -9,7 +9,7 @@ var PlayerActions = require('../actions/PlayerActions');
 var isPlaying = false;
 function toggle() {
   (isPlaying) ?
-    PlayerActions.stop() :
+    PlayerActions.pause() :
     PlayerActions.play();
   isPlaying = !(isPlaying);
 }

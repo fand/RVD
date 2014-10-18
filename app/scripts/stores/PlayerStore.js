@@ -26,10 +26,6 @@ function play() {
 function pause() {
   T.clearTimeout(_timer);
 }
-function stop() {
-  T.clearTimeout(_timer);
-  _pos = 0;
-}
 
 function sync() {
   PlayerActions.sync(_pos++);
@@ -75,20 +71,13 @@ var PlayerStore = merge(EventEmitter.prototype, {
 
     case Constants.PLAYER_PAUSE:
       pause();
-      PlayerStore.emitChange();
+      PlayerStore.emit(Constants.PLAYER_PAUSE);
       break;
-
-    case Constants.PLAYER_STOP:
-      stop();
-      PlayerStore.emit(Constants.PLAYER_STOP);
-      break;
-
 
       // events sent by this self
     case Constants.PLAYER_SYNC:
       PlayerStore.emit(Constants.PLAYER_SYNC, _pos);
       break;
-
 
       // BPM operation
     case Constants.PLAYER_SPEED_UP:

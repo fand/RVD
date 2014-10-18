@@ -12,11 +12,6 @@ var PlayerActions = {
       actionType: Constants.PLAYER_PAUSE
     });
   },
-  stop: function () {
-    AppDispatcher.handleViewAction({
-      actionType: Constants.PLAYER_STOP
-    });
-  },
   sync: function (time) {
     AppDispatcher.handleViewAction({
       actionType: Constants.PLAYER_SYNC,
