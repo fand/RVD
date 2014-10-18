@@ -5,7 +5,7 @@ var requireDir = require('require-directory');
 requireDir(module, './gulp/tasks');
 
 // Build
-gulp.task('build', ['html', 'bundle', 'images']);
+gulp.task('build', ['html', 'bundle']);
 
 // Default task
 gulp.task('default', ['clean'], function () {

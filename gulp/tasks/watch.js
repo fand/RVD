@@ -14,7 +14,4 @@ gulp.task('watch', ['html', 'bundle', 'webserver'], function () {
 
   // Watch .js or .coffee files
   gulp.watch(['app/scripts/**/*.js', 'app/scripts/**/*.coffee'], ['scripts-watch']);
-
-  // Watch image files
-  gulp.watch('app/images/**/*', ['images']);
 });
