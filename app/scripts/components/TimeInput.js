@@ -6,7 +6,7 @@ var KeyActions = require('../actions/KeyActions');
 
 var numkeys = ('0123456789').split('');
 
-var TimeLine = React.createClass({
+var TimeInput = React.createClass({
   getInitialState: function () {
     return {
       x: 0
@@ -79,7 +79,7 @@ var TimeLine = React.createClass({
     var suffix = (this.props.isFocused) ? ' focused' : '';
     var style = { fontSize: (window.innerWidth / 8.0 * 1.54) };
     return (
-      <div className={"timeline" + suffix} style={style}>
+      <div className={"time-input" + suffix} style={style}>
         {display}
       </div>
     );
@@ -87,4 +87,4 @@ var TimeLine = React.createClass({
 });
 
 
-module.exports = TimeLine;
+module.exports = TimeInput;

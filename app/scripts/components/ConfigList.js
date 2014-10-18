@@ -68,7 +68,7 @@ var ConfigList = React.createClass({
       return (<Config className={cls} sample={sample} key={sample.id} focus={focus} />);
     });
 
-    var cls = 'configList ';
+    var cls = 'config-list ';
     cls += (this.state.visible) ? 'visible' : 'invisible';
 
     return (

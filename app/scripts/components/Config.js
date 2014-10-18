@@ -3,8 +3,8 @@
 
 var React = require('react');
 var Dropper = require('./Dropper');
-var HexLine = require('./HexLine');
-var TimeLine = require('./TimeLine');
+var PatternInput = require('./PatternInput');
+var TimeInput = require('./TimeInput');
 var SampleActions = require('../actions/SampleActions');
 
 
@@ -25,9 +25,9 @@ var Config =  React.createClass({
         <Dropper onDrop={this.onDrop}>
           <img src={this.props.sample.thumbUrl} />
           <div className="config-content">
-            <HexLine onChange={this.onPatternChange} sample={this.props.sample}
+            <PatternInput onChange={this.onPatternChange} sample={this.props.sample}
               isFocused={this.props.focus === 'pattern'} />
-            <TimeLine onChange={this.onTimeChange} sample={this.props.sample}
+            <TimeInput onChange={this.onTimeChange} sample={this.props.sample}
               isFocused={this.props.focus === 'time'} />
           </div>
         </Dropper>
