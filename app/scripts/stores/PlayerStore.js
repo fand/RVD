@@ -4,12 +4,13 @@ var React = require('react');
 var EventEmitter = require('events');
 var merge = require('react/lib/merge');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
-//var SampleActions = require('../actions/SampleActions');
 var PlayerActions = require('../actions/PlayerActions');
 var Constants = require('../Constants');
 var CHANGE_EVENT = 'CHANGE_PLAYERSTORE';
 
-// timerによるイベント発火まではしない
+var MutekiTimer = require('../util/MutekiTimer');
+var T = new MutekiTimer();
+
 
 // Private Data
 var _bpm = 120;
@@ -23,20 +24,31 @@ function play() {
   sync();
 }
 function pause() {
-  window.clearTimeout(_timer);
+  T.clearTimeout(_timer);
 }
 function stop() {
-  //VideoActions.stop();
-  window.clearTimeout(_timer);
+  T.clearTimeout(_timer);
   _pos = 0;
 }
 
 function sync() {
   PlayerActions.sync(_pos++);
-  _timer = window.setTimeout(function () {
+  _timer = T.setTimeout(function () {
     sync();
   }, _duration);
+  console.log(_duration);
 }
+
+
+function speedUp() {
+  _bpm++;
+  _duration = (60 / 4) * 1000 / _bpm;
+}
+function speedDown() {
+  _bpm--;
+  _duration = (60 / 4) * 1000 / _bpm;
+}
+
 
 var PlayerStore = merge(EventEmitter.prototype, {
   emitChange: function () {
@@ -75,6 +87,16 @@ var PlayerStore = merge(EventEmitter.prototype, {
       // events sent by this self
     case Constants.PLAYER_SYNC:
       PlayerStore.emit(Constants.PLAYER_SYNC, _pos);
+      break;
+
+
+      // BPM operation
+    case Constants.PLAYER_SPEED_UP:
+      speedUp();
+      break;
+
+    case Constants.PLAYER_SPEED_DOWN:
+      speedDown();
       break;
     }
   })
