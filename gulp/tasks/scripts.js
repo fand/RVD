@@ -17,7 +17,7 @@ gulp.task('scripts-watch', function () {
 gulp.task('scripts', function () {
   var bundler = browserify({
     entries: ['./app/scripts/app.js'],
-    extensions: ['.js', '.coffee'],
+    extensions: ['.coffee'],
     debug: true,
     insertGlobals: true,
     cache: {}, packageCache: {}, fullPaths: true
@@ -34,8 +34,7 @@ gulp.task('scripts', function () {
     bundler.bundle()
       .on('error', gutil.log.bind(gutil))
       .pipe(source('app.js'))
-      .pipe(gulp.dest('dist/scripts'))
-      .pipe(gulpif(is_watching, reload({stream: true})));
+      .pipe(gulp.dest('dist/scripts'));
   };
 
   if (is_watching) {
