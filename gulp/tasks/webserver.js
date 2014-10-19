@@ -1,11 +1,11 @@
 var gulp = require('gulp');
-var browserSync = require('browser-sync');
+var express = require('express');
+var config = require('../config').webserver;
 
 // Webserver
 gulp.task('webserver', function () {
-  browserSync({
-    server: {
-      baseDir: "./dist/"
-    }
-  });
+  var serveStatic = require('serve-static');
+  var app = express()
+        .use(serveStatic(config.root))
+        .listen(3000);
 });

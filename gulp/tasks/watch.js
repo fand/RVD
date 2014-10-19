@@ -1,15 +1,20 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
-var reload = require('browser-sync').reload;
+var livereload = require('gulp-livereload');
+var config = require('../config').watch;
 
 // Watch
 gulp.task('watch', ['html', 'bundle', 'webserver'], function () {
   // Watch .html files
-  gulp.watch('app/*.html', ['html', reload]);
+  gulp.watch(config.src.html, ['html']);
 
   // Watch .scss files
-  gulp.watch('app/styles/**/*.scss', ['styles', reload]);
+  gulp.watch(config.src.styles, ['styles']);
 
   // Watch .js or .coffee files
-  gulp.watch(['app/scripts/**/*.js', 'app/scripts/**/*.coffee'], ['scripts-watch', reload]);
+  //gulp.start('scripts-watch');   // now working well...
+  gulp.watch(config.src.scripts, ['scripts']);
+
+  livereload.listen();
+  gulp.watch(config.dst).on('change', livereload.changed);
 });

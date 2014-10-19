@@ -4,7 +4,8 @@ var watchify = require('watchify');
 var source = require('vinyl-source-stream');
 var gutil = require('gulp-util');
 var gulpif = require('gulp-if');
-var reload = require('browser-sync').reload;
+var config = require('../config').scripts;
+
 
 // for 'watch' task
 var is_watching = false;
@@ -16,7 +17,7 @@ gulp.task('scripts-watch', function () {
 // Scripts
 gulp.task('scripts', function () {
   var bundler = browserify({
-    entries: ['./app/scripts/app.js'],
+    entries: config.entries,
     extensions: ['.coffee'],
     debug: true,
     insertGlobals: true,
@@ -34,7 +35,7 @@ gulp.task('scripts', function () {
     bundler.bundle()
       .on('error', gutil.log.bind(gutil))
       .pipe(source('app.js'))
-      .pipe(gulp.dest('dist/scripts'));
+      .pipe(gulp.dest(config.dst));
   };
 
   if (is_watching) {
