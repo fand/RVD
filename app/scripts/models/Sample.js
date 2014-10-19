@@ -7,11 +7,14 @@ var Sample = function (file) {
   this.id = count++;
   this.setSample(file);
 
-  this.time_string = '00:00.00';
-  this.pattern_string = 'F4D6A6DC';
-  this.time = 0;
+  // init pattern
+  this.pattern_string = this.randomPattern();
   this.pattern = [];
   this.setPattern(this.pattern_string);
+
+  // init time
+  this.time_string = '00:00.00';
+  this.time = 0;
   this.setTime(this.time_string);
 };
 Sample.isValid = function (file) {
@@ -73,7 +76,6 @@ Sample.prototype.setSample = function (file) {
 Sample.prototype.setTime = function (time_string) {
   if (time_string === this.time_string) { return; }
 
-
   // Convert string to sec.
   var times = time_string.split(/:|\./g);
   var newTime = (+times[0]) * 60 + (+times[1]) + (+times[2]) * 0.01;
@@ -92,6 +94,18 @@ Sample.prototype.setDOM = function (dom) {
 Sample.prototype.updateThumb = function () {
   if (!this.dom) { return; }
   this.thumbUrl = Thumb(this.dom);
+};
+
+Sample.prototype.randomPattern = function () {
+  var hexchars = '0123456789ABCDEF'.split('');
+  var pat = [];
+
+  // Default length == 8
+  for (var i = 0; i < 8; i++) {
+    var idx = (Math.random() * hexchars.length) | 0;
+    pat.push(hexchars[idx]);
+  }
+  return pat.join('');
 };
 
 module.exports = Sample;
