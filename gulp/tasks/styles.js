@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
-var gulpif = require('gulp-if');
 var reload = require('browser-sync').reload;
 
 // Styles

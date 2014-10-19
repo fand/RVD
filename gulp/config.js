@@ -20,5 +20,8 @@ module.exports = {
   scripts: {
     entries: [BASE('app/scripts/app.js')],
     dst: BASE('dist/scripts')
+  },
+  jshint: {
+    src: BASE('app/scripts/**/*.js')
   }
 };
