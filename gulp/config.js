@@ -4,7 +4,6 @@ var BASE = function (p) {
   return path.join(BASE_DIR, p);
 };
 
-
 module.exports = {
   watch: {
     src: {
@@ -20,8 +19,5 @@ module.exports = {
   scripts: {
     entries: [BASE('app/scripts/app.js')],
     dst: BASE('dist/scripts')
-  },
-  jshint: {
-    src: BASE('app/scripts/**/*.js')
   }
 };

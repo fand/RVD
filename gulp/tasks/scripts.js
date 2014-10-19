@@ -5,7 +5,7 @@ var gutil = require('gulp-util');
 var config = require('../config').scripts;
 
 // Scripts
-gulp.task('scripts', ['jshint'], function () {
+gulp.task('scripts', function () {
   var bundler = browserify({
     entries: config.entries,
     extensions: ['.coffee'],
