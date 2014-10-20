@@ -48,6 +48,13 @@ var SampleActions = {
       time: time
     });
   },
+  setDuration: function (id, duration) {
+    AppDispatcher.handleViewAction({
+      actionType: Constants.SAMPLE_SET_DURATION,
+      id: id,
+      duration: duration
+    });
+  },
   updateThumb: function (id) {
     AppDispatcher.handleViewAction({
       actionType: Constants.SAMPLE_UPDATE_THUMB,

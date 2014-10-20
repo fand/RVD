@@ -45,9 +45,14 @@ var setDOM = function (id, dom) {
   _samples[idx].setDOM(dom);
 };
 
-var setTime = function (id, sample) {
+var setTime = function (id, time) {
   var idx = _ids[id];
-  _samples[idx].setTime(sample);
+  _samples[idx].setTime(time);
+};
+
+var setDuration = function (id, duration) {
+  var idx = _ids[id];
+  _samples[idx].setDuration(duration);
 };
 
 var updateThumb = function (id) {
@@ -104,6 +109,11 @@ var SampleStore = merge(EventEmitter.prototype, {
 
     case Constants.SAMPLE_SET_TIME:
       setTime(action.id, action.time);
+      SampleStore.emitChange();
+      break;
+
+    case Constants.SAMPLE_SET_DURATION:
+      setDuration(action.id, action.duration);
       SampleStore.emitChange();
       break;
 

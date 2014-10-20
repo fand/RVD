@@ -49,7 +49,7 @@ var TimeInput = React.createClass({
   _moveRight: function (e) {
     if (! this.props.isFocused) { return; }
     cancelEvent(e);
-    if (this.state.x < 15) {
+    if (this.state.x < 9) {
       this.setState({ x: this.state.x + 1 });
     }
   },
@@ -62,18 +62,25 @@ var TimeInput = React.createClass({
   },
   onKeyPressed: function (e, key) {
     var pos = this.state.x;
-    if (pos === 2 || pos === 5) { return; }    // str[2], [5] are separator. They can't be changed.
+    if (pos === 2 || pos === 5 || pos === 8) { return; }    // str[2], [5], [8] are separator. They can't be changed.
 
-    var str = this.props.sample.time_string + '';
-    var newTime = (str.substring(0, pos) + key + str.substring(pos + 1));
-    this.onChange(newTime);
+    // Get new string
+    var str = this.props.sample.time_string + 'x' + this.props.sample.duration;
+    var newStr = (str.substring(0, pos) + key + str.substring(pos + 1));
+
+    (pos < 8) ?
+      this._onTimeChange(newStr) : this._onDurationChange(newStr);
     this._moveRight(e);
   },
-  onChange: function (str) {
-    this.props.onChange(str);
+  _onTimeChange: function (str) {
+    var newTime = str.substring(0, 8);
+    this.props.onTimeChange(newTime);
+  },
+  _onDurationChange: function (str) {
+    this.props.onDurationChange(str[9]);
   },
   renderLine: function () {
-    var str = this.props.sample.time_string + '　';
+    var str = this.props.sample.time_string + 'x' + this.props.sample.duration;
     return (
       <span className="fake-display">
         <span className="line">
@@ -87,7 +94,7 @@ var TimeInput = React.createClass({
   render: function () {
     var display = this.renderLine();
     var suffix = (this.props.isFocused) ? ' focused' : '';
-    var style = { fontSize: (window.innerWidth / 8.0 * 1.54) };
+    var style = { fontSize: (window.innerWidth / 10.0 * 1.6) };
     return (
       <div className={"time-input" + suffix} style={style}>
         {display}
