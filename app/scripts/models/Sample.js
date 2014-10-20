@@ -16,6 +16,8 @@ var Sample = function (file) {
   this.time_string = '00:00.00';
   this.time = 0;
   this.setTime(this.time_string);
+
+  this.duration = 1;
 };
 Sample.isValid = function (file) {
   return (file && file.type && file.type.match(/video|audio/i));
@@ -83,6 +85,13 @@ Sample.prototype.setTime = function (time_string) {
   if (this.dom.duration < newTime) { return; }
   this.time = newTime;
   this.time_string = time_string;
+  this.updateThumb();
+};
+
+Sample.prototype.setDuration = function (_d) {
+  var d = +_d;    // Number
+  if (d === 0 || d > 8) { return; }
+  this.duration = d;
   this.updateThumb();
 };
 

@@ -15,6 +15,9 @@ var Edit =  React.createClass({
   onTimeChange: function (newTime) {
     SampleActions.setTime(this.props.sample.id, newTime);
   },
+  onDurationChange: function (newDuration) {
+    SampleActions.setDuration(this.props.sample.id, newDuration);
+  },
   onDrop: function (newFiles) {
     SampleActions.setSample(this.props.sample.id, newFiles[0]);
   },
@@ -25,10 +28,18 @@ var Edit =  React.createClass({
         <Dropper onDrop={this.onDrop}>
           <img src={this.props.sample.thumbUrl} />
           <div className="edit-content">
-            <PatternInput onChange={this.onPatternChange} sample={this.props.sample}
+
+            <PatternInput
+              onChange={this.onPatternChange}
+              sample={this.props.sample}
               isFocused={this.props.focus === 'pattern'} />
-            <TimeInput onChange={this.onTimeChange} sample={this.props.sample}
+
+            <TimeInput
+              onTimeChange={this.onTimeChange}
+              onDurationChange={this.onDurationChange}
+              sample={this.props.sample}
               isFocused={this.props.focus === 'time'} />
+
           </div>
         </Dropper>
       </ div>
