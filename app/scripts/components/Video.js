@@ -10,9 +10,11 @@ var SampleActions = require('../actions/SampleActions');
 
 var Video = React.createClass({
   getInitialState: function () {
+    this.duration = 0;
     return { paused: true };
   },
   play: function () {
+    this.duration = this.props.sample.duration;
     this.refs.dom.getDOMNode().currentTime = this.props.sample.time;
     this.refs.dom.getDOMNode().play();
     this.setState({ paused: false });
@@ -22,9 +24,10 @@ var Video = React.createClass({
     this.setState({ paused: true });
   },
   sync: function (time) {
+    this.duration--;
     if (this.props.sample.getNote(time)) {
       this.play();
-    } else {
+    } else if (this.duration === 0){
       this.pause();
     }
   },

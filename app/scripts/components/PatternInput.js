@@ -49,9 +49,9 @@ var PatternInput = React.createClass({
   _inputZero: function (e) {
     if (! this.props.isFocused) { return; }
     cancelEvent(e);
-    var pos = self.state.y * 8 + self.state.x;
-    var str = self.props.sample.pattern_string;
-    self.props.onChange(str.substring(0, pos) + str.substring(pos + 1));
+    var pos = this.state.y * 8 + this.state.x;
+    var str = this.props.sample.pattern_string;
+    this.props.onChange(str.substring(0, pos) + str.substring(pos + 1));
   },
   _moveRight: function (e) {
     if (! this.props.isFocused) { return; }
