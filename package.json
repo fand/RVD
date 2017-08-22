@@ -14,12 +14,13 @@
     "gulp-load-plugins": "^0.7.0",
     "gulp-plumber": "^0.6.6",
     "gulp-react": "^1.0.2",
-    "gulp-sass": "^1.2.0",
+    "gulp-sass": "^3.1.0",
     "gulp-size": "^1.1.0",
     "gulp-useref": "^1.0.2",
     "gulp-util": "^3.0.1",
     "lodash": "^2.4.1",
     "mousetrap": "0.0.1",
+    "node-sass": "^4.5.3",
     "react": "^0.11.2",
     "reactify": "^0.14.0",
     "require-directory": "^2.0.0",
@@ -28,5 +29,8 @@
   },
   "engines": {
     "node": ">=0.10.0"
+  },
+  "scripts": {
+    "build": "gulp"
   }
 }

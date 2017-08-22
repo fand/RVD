@@ -11,13 +11,13 @@ module.exports = {
       styles: BASE('app/styles/**/*'),
       scripts: BASE('app/scripts/**/*')
     },
-    dst: BASE('dist/**/*')
+    dst: BASE('docs/**/*')
   },
   webserver: {
-    root: BASE('dist')
+    root: BASE('docs')
   },
   scripts: {
     entries: [BASE('app/scripts/app.js')],
-    dst: BASE('dist/scripts')
+    dst: BASE('docs/scripts')
   }
 };

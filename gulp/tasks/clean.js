@@ -3,5 +3,5 @@ var del = require('del');
 
 // Clean
 gulp.task('clean', function (cb) {
-  del(['dist/styles', 'dist/scripts'], cb);
+  del(['docs/styles', 'docs/scripts'], cb);
 });

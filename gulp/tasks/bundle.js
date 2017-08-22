@@ -9,5 +9,5 @@ gulp.task('bundle', ['styles', 'scripts'], function(){
     .pipe(assets)
     .pipe(assets.restore())
     .pipe($.useref())
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('docs'));
 });

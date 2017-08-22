@@ -6,6 +6,6 @@ gulp.task('html', function () {
   return gulp.src('app/*.html')
     .pipe($.plumber())
     .pipe($.useref())
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('docs'))
     .pipe($.size());
 });
