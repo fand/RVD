@@ -23,11 +23,11 @@ var VideoList = React.createClass({
     (this.state.paused) ? this.play() : this.pause();
     this.setState({ paused: !this.state.paused });
   },
+  renderVideo: function (sample, i) {
+    return (<Video sample={sample} key={sample.id} ref={'sample' + i} />);
+  },
   render: function() {
-    var renderVideo = function (sample, i) {
-      return (<Video sample={sample} key={sample.id} ref={'sample' + i} />);
-    };
-    return (<div className="sampleList">{this.props.samples.map(renderVideo)}</div>);
+    return (<div className="sampleList">{this.props.samples.map(this.renderVideo)}</div>);
   }
 });
 
