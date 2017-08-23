@@ -1,0 +1,184 @@
+.wrapscreen, .fullscreen, .dropper, .dropper .dropper-mask.over, .sample-manager .dropper, .sampleList, .edit-list, .help, .edit, .edit img, .edit .dropper {
+  margin: 0;
+  padding: 0;
+  min-width: 100%;
+  min-height: 100%; }
+
+.fullscreen, .dropper, .dropper .dropper-mask.over, .sample-manager .dropper, .sampleList, .edit-list, .help {
+  position: fixed;
+  top: 0;
+  left: 0; }
+
+* {
+  padding: 0;
+  margin: 0;
+  z-index: 1; }
+
+body {
+  background: #000;
+  overflow: hidden; }
+
+#app {
+  position: fixed;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; }
+
+.dropper {
+  z-index: 10; }
+  .dropper.hide {
+    display: none; }
+  .dropper .dropper-mask {
+    z-index: -1;
+    pointer-events: none; }
+    .dropper .dropper-mask.over {
+      content: '';
+      z-index: 100;
+      background: rgba(200, 100, 130, 0.3); }
+
+.sampleList {
+  width: 100%;
+  height: 100%; }
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: fill; }
+  video.paused {
+    display: none; }
+
+.edit-list {
+  top: -9999px;
+  z-index: -1; }
+  .edit-list.visible {
+    top: 0px;
+    z-index: 20; }
+
+.edit {
+  position: absolute;
+  top: 0px;
+  background: rgba(100, 100, 100, 0.8);
+  overflow: hidden;
+  transition: left .1s linear 0; }
+  .edit img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.3; }
+  .edit .dropper {
+    position: absolute;
+    top: 0;
+    left: 0; }
+  .edit .edit-content {
+    transition: top .05s ease-in 0;
+    position: absolute;
+    width: 100%;
+    height: 200%; }
+
+.edit-active {
+  left: 0; }
+
+.edit-right {
+  left: 100%; }
+
+.edit-left {
+  left: -100%; }
+
+.edit-pattern .edit-content {
+  top: 0; }
+
+.edit-time .edit-content {
+  top: -100%; }
+
+.pattern-input {
+  top: 0; }
+  .pattern-input.focused .fake-invert {
+    background: #0DF; }
+
+.time-input {
+  top: 50%; }
+  .time-input.focused .fake-invert {
+    background: #FF7050; }
+
+.fake, .pattern-input, .time-input {
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  width: 100%;
+  height: 50%; }
+  .fake .fake-display, .pattern-input .fake-display, .time-input .fake-display {
+    font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
+    font-style: italic;
+    color: #eee;
+    position: absolute;
+    min-width: 100%;
+    height: 100%; }
+    .fake .fake-display .line, .pattern-input .fake-display .line, .time-input .fake-display .line {
+      display: block;
+      position: relative;
+      top: 0;
+      min-width: 120%;
+      height: 40%; }
+      .fake .fake-display .line span, .pattern-input .fake-display .line span, .time-input .fake-display .line span {
+        position: relative;
+        display: inline;
+        line-height: 1em; }
+  .fake.focused .fake-invert, .focused.pattern-input .fake-invert, .focused.time-input .fake-invert {
+    color: #222; }
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  color: #444; }
+  .header h1 {
+    float: left; }
+  .header h2 {
+    float: right;
+    margin-left: 10px;
+    cursor: pointer; }
+
+.help {
+  display: none;
+  background: rgba(0, 0, 0, 0.8);
+  color: #ddd;
+  z-index: 200; }
+  .help.visible {
+    display: block; }
+  .help h1 {
+    color: #444; }
+  .help ul {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 480px;
+    height: 400px;
+    line-height: 42px;
+    list-style: none; }
+    .help ul li {
+      position: relative;
+      display: block;
+      width: 100%;
+      top: 0; }
+    .help ul .help-key {
+      font-size: 16px;
+      text-align: center;
+      display: inline-block;
+      width: 100px;
+      margin: 5px 30px;
+      border-radius: 2px;
+      border: 1px solid #444; }
+    .help ul .help-description {
+      text-align: center;
+      font-size: 18px;
+      display: inline-block;
+      width: 280px; }
