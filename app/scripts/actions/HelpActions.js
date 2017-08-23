@@ -6,7 +6,12 @@ var HelpActions = {
     AppDispatcher.handleViewAction({
       actionType: Constants.HELP_TOGGLE
     });
-  }
+  },
+  hide: function (key, listener) {
+    AppDispatcher.handleViewAction({
+      actionType: Constants.HELP_HIDE
+    });
+  },
 };
 
 module.exports = HelpActions;

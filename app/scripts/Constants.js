@@ -20,4 +20,5 @@ module.exports = keyMirror({
   KEY_UNBIND: null,
 
   HELP_TOGGLE: null,
+  HELP_HIDE: null,
 });

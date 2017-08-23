@@ -23,9 +23,12 @@ var HelpStore = merge(EventEmitter.prototype, {
     var action = payload.action;
 
     switch (action.actionType) {
-    case Constants.HELP_TOGGLE:
-      HelpStore.emitChange();
-      break;
+      case Constants.HELP_TOGGLE:
+        HelpStore.emitChange();
+        break;
+      case Constants.HELP_HIDE:
+        HelpStore.emit(Constants.HELP_HIDE);
+        break;
     }
   })
 });

@@ -136,7 +136,8 @@ video {
   left: 0;
   width: 100%;
   height: 90px;
-  color: #444; }
+  color: #444;
+  z-index: 100; }
   .header h1 {
     float: left; }
   .header h2 {
@@ -146,13 +147,11 @@ video {
 
 .help {
   display: none;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.6);
   color: #ddd;
   z-index: 200; }
   .help.visible {
     display: block; }
-  .help h1 {
-    color: #444; }
   .help ul {
     position: absolute;
     top: 0;
@@ -173,7 +172,7 @@ video {
       font-size: 16px;
       text-align: center;
       display: inline-block;
-      width: 100px;
+      width: 130px;
       margin: 5px 30px;
       border-radius: 2px;
       border: 1px solid #444; }

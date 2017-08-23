@@ -10,17 +10,17 @@ var SampleStore = require('../stores/SampleStore');
 var KeyStore = require('../stores/KeyStore');
 var KeyActions = require('../actions/KeyActions');
 var SampleActions = require('../actions/SampleActions');
+var PlayerActions = require('../actions/PlayerActions');
+var HelpActions = require('../actions/HelpActions');
 var Constants = require('../Constants.js');
 
 var PlayerMixin = require('../mixins/PlayerMixin');
-
 
 var getState = function () {
   return {
     samples: SampleStore.getSamples()
   };
 };
-
 
 /**
  * Holds models of mode, samples.
@@ -32,6 +32,7 @@ var RVDApp = React.createClass({
   },
   componentDidMount: function () {
     SampleStore.addListener(Constants.SAMPLE_CHANGE, this.onSamplesUpdate);
+    PlayerActions.play();
   },
   componentWillUnmount: function () {
     SampleStore.removeListener(Constants.SAMPLE_CHANGE, this.onSamplesUpdate);
@@ -41,6 +42,7 @@ var RVDApp = React.createClass({
   },
   onDrop: function (files) {
     SampleActions.createMultiple(files);
+    HelpActions.hide();
   },
   render: function() {
     return (
